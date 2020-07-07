@@ -16,9 +16,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a id="load-menu-id"><i class="fa fa-circle-o"></i>部门管理</a></li>
-            <li><a id="load-role-id"><i class="fa fa-circle-o"></i>角色管理</a></li>
+            <li><a id="load-dept-id"><i class="fa fa-circle-o"></i>部门管理</a></li>
             <li><a id="load-user-id"><i class="fa fa-circle-o"></i>用户管理</a></li>
+            <li><a id="load-perm-id"><i class="fa fa-circle-o"></i>权限管理</a></li>
+            <li><a id="load-file-id"><i class="fa fa-circle-o"></i>文档管理</a></li>
           </ul>
         </li>
       </ul>
@@ -50,12 +51,12 @@ $('#load-role-id').click(function(){
 	var url="role/listUI.do?t="+Math.random(1000);
 	$(".content").load(url);
 })
-$('#load-menu-id').click(function(){
+$('#load-dept-id').click(function(){
 	var url="dept/list?t="+Math.random(1000);
 	$(".content").load(url);
 })
 $('#load-user-id').click(function(){
-	var url="user/listUI.do?t="+Math.random(1000);
+	var url="user/listUI?t="+Math.random(1000);
 	$(".content").load(url);
 })
 </script>

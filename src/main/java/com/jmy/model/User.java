@@ -10,6 +10,7 @@ import java.util.Date;
 @Setter
 @ToString
 public class User {
+    private Integer id;
     private String username;
     private String telephone;
     private String password;
@@ -17,6 +18,6 @@ public class User {
     private Integer deptId;
     private String operator;
     private Date operatorTime;
-    private Integer status;
+    private Integer valid;
     private String deptName;
 }

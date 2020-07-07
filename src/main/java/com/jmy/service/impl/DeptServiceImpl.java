@@ -26,4 +26,9 @@ public class DeptServiceImpl implements DeptService {
     public Dept findById(Integer id) {
         return deptMapper.findById(id);
     }
+
+    @Override
+    public List<Map<String, Object>> findZtreeNodes() {
+        return deptMapper.findZtreeNodes();
+    }
 }

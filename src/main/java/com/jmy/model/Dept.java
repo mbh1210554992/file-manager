@@ -20,4 +20,5 @@ public class Dept {
     private String operator;
     private Date operatorTime;
     private String remark;
+    private String parentName;
 }

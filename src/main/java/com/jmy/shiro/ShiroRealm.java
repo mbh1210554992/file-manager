@@ -31,7 +31,7 @@ public class ShiroRealm extends AuthenticatingRealm {
         }else{
             throw new UnknownAccountException("用户名或密码有误！");
         }
-        if (user.getStatus() == 0) {
+        if (user.getValid() == 0) {
             throw new UnknownAccountException("用户名已被禁用，请联系系统管理员！");
         }
 

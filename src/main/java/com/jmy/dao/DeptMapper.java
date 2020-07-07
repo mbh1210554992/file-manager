@@ -12,4 +12,5 @@ import java.util.Map;
 public interface DeptMapper {
     List<Map<String, Object>> findObjects();
     Dept findById(@Param("id")Integer id);
+    List<Map<String,Object>> findZtreeNodes();
 }

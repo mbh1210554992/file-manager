@@ -43,7 +43,7 @@
 	<!-- 选择菜单 -->
 	<div class="layui-layer layui-layer-page layui-layer-molv layer-anim" id="menuLayer" type="page" times="2" showtime="0" contype="object"
 		style="z-index: 19891016; width: 300px; height: 450px; top: 100px; left: 500px; display:none">
-		<div class="layui-layer-title" style="cursor: move;">选择菜单</div>
+		<div class="layui-layer-title" style="cursor: move;">选择部门</div>
 		<div class="layui-layer-content" style="height: 358px;">
 			<div style="padding: 10px;" class="layui-layer-wrap">
 				<ul id="menuTree" class="ztree"></ul>    <!-- 动态加载树 -->

@@ -9,13 +9,14 @@ function doValidById(){
 	var userId = $(this).parent().parent().data('userId');
 	var valid = $(this).val();
 	var params = {'userId':userId,'valid':valid};
-	var url ='user/doValidById.do';
+	var url ='user/doValidById';
 	$.post(url,params,function(result){
 		if(result.state==10000){
 		 alert("操作成功！");
 		 doGetObjects();
 		}else{
 		 alert(result.message);
+		 doGetObjects();
 		}
 	});
 }
@@ -23,10 +24,10 @@ function doValidById(){
 function doLoadEditPage(){
 	var title;
 	if($(this).hasClass("btn-add")){
-		title="添加菜单信息";
+		title="添加用户";
 	}
 	if($(this).hasClass("btn-update")){
-	    title="修改菜单信息"
+	    title="修改用户信息"
 	    var id=getCheckedId();//获得选中的记录id值
 		if(!id){
 		  alert("请先选择");return;

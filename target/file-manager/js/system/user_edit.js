@@ -6,9 +6,9 @@ $(document).ready(function(){
 	var userId = $('.content').data('userId');
 	//根据id查询用户信息
 	if(userId){
-	doFindObjectById(userId);
+		doFindObjectById(userId);
 	}else{
-	doLoadRoles();
+		doLoadRoles();
 	}
 });
 //点击保存/修改按钮
@@ -25,7 +25,7 @@ function doSaveOrUpdate(){
 		params.id = userId;
 		var url = userId?'user/doUpdateObject.do':'user/doSaveObject.do';
 		$.post(url,params,function(result){
-			if(result.state==1){
+			if(result.code==10000){
 				alert('操作成功！');
 			    doBack();
 			}else{

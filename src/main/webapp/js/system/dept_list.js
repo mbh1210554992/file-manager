@@ -122,6 +122,17 @@ function doGetObjects() {
 	//1.2获得选中数组中下标为0的元素id的值
 	return selections[0].id;
   }
+/*获得选中的id值*/
+function getSelectedPname(){
+	//1.1 获得选中的对象,默认返回值为一个对象数组
+	var selections=$("#DeptTable")
+		.bootstrapTreeTable("getSelections");
+	if(selections.length==0){
+		return -1;//表示没选择任何对象
+	}
+	//1.2获得选中数组中下标为0的元素id的值
+	return selections[0].parent_name;
+}
   //删除菜单项
   function doDeleteObject(){
 	var menuId=getSelectedId();

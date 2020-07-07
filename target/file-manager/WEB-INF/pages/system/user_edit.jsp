@@ -58,4 +58,4 @@
 			</form>
 	 </div>
  </div>
-<script type="text/javascript" src="${basePath}/ttms/system/user_edit.js"></script>
+<script type="text/javascript" src="${basePath}/js/system/user_edit.js"></script>

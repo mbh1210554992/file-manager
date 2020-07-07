@@ -72,19 +72,20 @@ function doLogin(){
 	var url = 'user/login';
 
 	$.ajax({
-                url: url,  //数据地址
-                data: JSON.stringify({"username": userName, "password": userPwd}),
-                type: "POST",  //请求方式
-                dataType: "json",
-                contentType: "application/json;charset=UTF-8",
-                success: function (result) {
-                        if(result.code==10000){   //用户校验成功，跳转到主页面
-                        			location.href='index.jsp';
-                        		}else{
-                        			$('#errorMessage').parent().parent().css('display','block');
-                        			$('#errorMessage').text(result.message);
-                        		}
-                }
-            })
+        url: url,  //数据地址
+        data: JSON.stringify({"username": userName, "password": userPwd}),
+        type: "POST",  //请求方式
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (result) {
+            if(result.code==10000){
+                //用户校验成功，跳转到主页面
+                location.href='index.jsp';
+            }else{
+                $('#errorMessage').parent().parent().css('display','block');
+                $('#errorMessage').text(result.message);
+                }
+         }
+      })
 }
 </script>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri= "http://java.sun.com/jsp/jstl/core" prefix= "c" %> 
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
-<script src="${basePath}/ttms/common/page.js"></script>
+<script src="${basePath}/js/common/page.js"></script>
 <div class="container">
    <!-- 页面导航 -->
     <div class="page-header">
@@ -31,8 +31,8 @@
 					<tr>
 					    <th>选择</th>
 						<th>用户名</th>
-						<th>邮箱</th>
 						<th>手机号</th>
+						<th>所属部门</th>
 						<th>状态</th>
 						<th>操作</th>
 					</tr>
@@ -43,4 +43,4 @@
 		</div>
 	</form>
 </div>
-<script type="text/javascript" src="${basePath}/ttms/system/user_list.js"></script>
+<script type="text/javascript" src="${basePath}/js/system/user_list.js"></script>

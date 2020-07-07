@@ -4,7 +4,7 @@ var setting = {
 		simpleData : {
 			enable : true,
 			idKey : "id",  //节点数据中保存唯一标识的属性名称
-			pIdKey : "parentId",  //节点数据中保存其父节点唯一标识的属性名称
+			pIdKey : "parent_id",  //节点数据中保存其父节点唯一标识的属性名称
 			rootPId : null  //根节点id
 		}
 	}
@@ -44,6 +44,7 @@ function doSetEditFormData(dept){
 //	});
 	$('#deptName').val(dept.name);
 	$('#parentName').val(dept.parentName);
+	console.log("parentName="+dept.parentName);
 	$('#remark').val(dept.remark);
 }
 
@@ -56,10 +57,10 @@ function doSaveOrUpdate(){
 		var url = menuId?'menu/doUpdateObject.do':'menu/doSaveObject.do';
 		params.id = menuId;
 		$.post(url,params,function(result){
-			if(result.state == 1){
+			if(result.code == 10000){
 				alert('操作成功');
 				doClearData();
-				$('.content').load('menu/listUI.do');
+				$('.content').load('menu/list');
 			}else{
 				alert(result.message);
 			}
@@ -70,8 +71,8 @@ function doSaveOrUpdate(){
 //清空表单数据
 function doClearData(){
 	$('#editMenuForm .dynamicClear').val('');
-	$('.content').data('menuId','');
-	$('#editMenuForm').data('parentId','');
+	$('.content').data('id','');
+	$('#editMenuForm').data('parent_id','');
 	$('input[name="menuType"]:first').prop('checked',true);
 }
 
@@ -80,11 +81,13 @@ function getEditFormData(){
 	var params = {
 			'type':$('input[name="menuType"]:checked').val(),
 			'name':$('#menuName').val(),
-			'parentId':$('#editMenuForm').data('parentId'),
+			'parentId':$('#editMenuForm').data('parent_id'),
 			'url':$('#menuUrl').val(),
 			'permission':$('#menuPermission').val(),
 			'sort':$('#menuSort').val()
 	}
+	console.log(params.parentId);
+	console.log(params.parentname);
 	return params;
 }
 //返回
@@ -101,9 +104,9 @@ function doHideZtree(){
 //显示选择菜单
 function doLoadZTreeNodes(){
 	$('#menuLayer').css('display','block');
-	var url ='menu/treeUI.do';
+	var url ='dept/doFindZtree';
 	$.getJSON(url,function(result){
-		if(result.state==1){
+		if(result.code==10000){
 			zTree = $.fn.zTree.init($("#menuTree"), setting,result.data);
 		}else{
 			alert(result.message);
@@ -116,6 +119,6 @@ function doSetSelectedNode(){
 	 var node = selectedNodes[0];
 	 $('#menuLayer').css('display','none');
 	 $('#parentName').val(node.name);
-	 $('#editMenuForm').data('parentId',node.id);
+	 $('#editMenuForm').data('parent_id',node.id);
 }
 

@@ -9,13 +9,14 @@ function doValidById(){
 	var userId = $(this).parent().parent().data('userId');
 	var valid = $(this).val();
 	var params = {'userId':userId,'valid':valid};
-	var url ='user/doValidById.do';
+	var url ='user/doValidById';
 	$.post(url,params,function(result){
-		if(result.state==1){
+		if(result.state==10000){
 		 alert("操作成功！");
 		 doGetObjects();
 		}else{
 		 alert(result.message);
+		 doGetObjects();
 		}
 	});
 }
@@ -23,10 +24,10 @@ function doValidById(){
 function doLoadEditPage(){
 	var title;
 	if($(this).hasClass("btn-add")){
-		title="添加菜单信息";
+		title="添加用户";
 	}
 	if($(this).hasClass("btn-update")){
-	    title="修改菜单信息"
+	    title="修改用户信息"
 	    var id=getCheckedId();//获得选中的记录id值
 		if(!id){
 		  alert("请先选择");return;
@@ -34,7 +35,7 @@ function doLoadEditPage(){
 		$('.content').data('userId',id);
 		console.log("id="+id);
 	}
-	var url="user/editUI.do"
+	var url="user/editUI"
 	$(".content").load(url,function(){
 		$(".panel-heading").html(title)
 	})
@@ -62,9 +63,9 @@ function doGetObjects(){
 	}
 	var params = getQueryFormData();
 	params.pageCurrent=pageCurrent;
-	var url = 'user/doFindObjects.do';
+	var url = 'user/doGetUsers';
 	$.post(url,params,function(result){
-		if(result.state==1){
+		if(result.code==10000){
 			setTableBodyRows(result.data.list);
 			setPagination(result.data.pageObject);
 		}else{
@@ -78,8 +79,8 @@ function setTableBodyRows(list){
 	var tBody=$('tbody');tBody.empty();
 	var tds='<td><input type="radio" name="checkedItem" value="[id]"></td>'+
 	'<td>[username]</td>'+
-	'<td>[email]</td>'+
-	'<td>[mobile]</td>'+
+	'<td>[telephone]</td>'+
+	'<td>[deptName]</td>'+
 	'<td>[state]</td>'+
 	'<td><button type="button" class="btn btn-default btn-xs btn-valid" value="[validchange]">[stateStr]</button></td>';
 	for(var i in list){
@@ -91,8 +92,8 @@ function setTableBodyRows(list){
 	    tr.append(
 	    tds.replace('[id]',list[i].id)
 	    .replace('[username]',list[i].username)
-	    .replace('[email]',list[i].email)
-	    .replace('[mobile]',list[i].mobile)
+	    .replace('[telephone]',list[i].telephone)
+	    .replace('[deptName]',list[i].deptName)
 	    .replace('[state]',state)
 	    .replace('[validchange]',validchange)
 	    .replace('[stateStr]',stateStr));

@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <title>TTMS旅游管理系统</title>
+  <title>文档管理系统</title>
   <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap.min.css" />
   <link rel="stylesheet" href="${basePath}/bootstrap/css/font-awesome.min.css">
   <link rel="stylesheet" href="${basePath}/dist/css/AdminLTE.min.css">
@@ -19,7 +19,7 @@
 <div class="login-box" id="rrapp">
   <div class="login-box-body">
    <form action="">
-      <p class="login-box-msg"><b>TTMS 用户登录</b></p>
+      <p class="login-box-msg"><b>用户登录</b></p>
        <div class="alert alert-danger alert-dismissible" style="display:none">
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle" id="errorMessage"></i></h4>
       </div>
@@ -69,15 +69,23 @@ function doLogin(){
 		return false;
 	}
 	//判断此用户是否存在于数据库中
-	var url = 'login.do';
-	var params = {'username':userName,'password':userPwd};
-	$.post(url,params,function(result){
-		if(result.state==1){   //用户校验成功，跳转到主页面
-			location.href='indexUI.do';
-		}else{
-			$('#errorMessage').parent().parent().css('display','block');
-			$('#errorMessage').text(result.message);
-		}
-	})
+	var url = 'user/login';
+
+	$.ajax({
+        url: url,  //数据地址
+        data: JSON.stringify({"username": userName, "password": userPwd}),
+        type: "POST",  //请求方式
+        dataType: "json",
+        contentType: "application/json;charset=UTF-8",
+        success: function (result) {
+            if(result.code==10000){
+                //用户校验成功，跳转到主页面
+                location.href='index.jsp';
+            }else{
+                $('#errorMessage').parent().parent().css('display','block');
+                $('#errorMessage').text(result.message);
+                }
+         }
+      })
 }
 </script>

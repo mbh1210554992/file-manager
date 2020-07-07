@@ -11,4 +11,5 @@ public interface UserMapper {
                           @Param("startIndex")int startIndex,
                           @Param("pageSize")int pageSize);
     Integer getRowCount(@Param("username")String username);
+    int validById(@Param("id")Integer id,@Param("valid")Integer valid);
 }

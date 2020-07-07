@@ -31,7 +31,16 @@ public class UserController {
         return new Result(ResultCode.SUCCESS, userService.findAllUer(username, pageCurrent));
     }
 
-    public Result getUserById(){
+    /**
+     * 启用/禁用
+     */
+    @RequestMapping("doValidById")
+    @ResponseBody
+    public Result doValidById(Integer userId,Integer valid){
+        userService.validById(userId,valid);
+        return new Result(ResultCode.SUCCESS);
 
     }
+
+
 }

@@ -50,4 +50,10 @@ public class DeptController {
     public Result findById(@RequestParam("id") Integer id){
         return new Result(ResultCode.SUCCESS,deptService.findById(id));
     }
+
+    @RequestMapping("doFindZtree")
+    @ResponseBody
+    public Result findZTree(){
+        return new Result(ResultCode.SUCCESS, deptService.findZtreeNodes());
+    }
 }

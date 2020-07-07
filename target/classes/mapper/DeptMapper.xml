@@ -9,6 +9,7 @@
         <result property="operator" column="operator"/>
         <result property="operatorTime" column="operator_time"/>
         <result property="remark" column="remark"/>
+        <result property="parentName" column="parent_name"/>
 
     </resultMap>
     <select id="findObjects" resultType="map">
@@ -17,6 +18,14 @@
         on d.parent_id = p.id;
     </select>
     <select id="findById" resultType="com.jmy.model.Dept">
-        select name, parent_id, remark from dept where id = #{id};
+        SELECT d1.name, d1.parent_id as parent_id, d2.name as parent_name ,d1.remark from dept d1
+        left join dept d2 on  d1.parent_id = d2.id
+        where d1.id = #{id};
+    </select>
+
+    <select id="findZtreeNodes"
+            resultType="map">
+       select id,parent_id,name
+       from dept;
     </select>
 </mapper>

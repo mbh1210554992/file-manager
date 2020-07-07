@@ -1,5 +1,6 @@
 package com.jmy.service.impl;
 
+import com.jmy.common.exception.ServiceException;
 import com.jmy.dao.UserMapper;
 import com.jmy.model.User;
 import com.jmy.model.entity.PageObject;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class UserServiceImpl implements UserService {
+                public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
@@ -38,5 +39,16 @@ public class UserServiceImpl implements UserService {
         map.put("pageObject", pageObject);
         return map;
 
+    }
+
+    @Override
+    public void validById(Integer userId, Integer valid) {
+        if(userId==null)
+            throw new ServiceException("修改用户状态，用户id不能为空！");
+        if(valid==null)
+            throw new ServiceException("修改用户状态，valid值不能为空！");
+        int i = userMapper.validById(userId,valid);
+        if(i==-1)
+            throw new ServiceException("切换用户启用禁用状态失败！");
     }
 }
