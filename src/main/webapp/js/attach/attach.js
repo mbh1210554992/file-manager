@@ -44,7 +44,9 @@ function setTableBodyRows(list){
 		tr.append("<td>"+list[i].publisher+"</td>");
 		tr.append("<td>"+list[i].deptName+"</td>");
 		tr.append("<td>"+list[i].publisherDate+"</td>");
-		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button><button type="button" class="btn btn-default" id="update">覆盖</button></td>')
+		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button>' +
+			'<button type="button" class="btn btn-info" id="update">覆盖</button>' +
+			'<button type="button" class="btn btn-danger" id="delete">删除</button></td>')
 	    tBody.append(tr);
 	}
 }
