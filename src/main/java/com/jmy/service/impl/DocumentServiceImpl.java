@@ -54,4 +54,9 @@ public class DocumentServiceImpl implements DocumentService {
         }
         return target;
     }
+
+    @Override
+    public Document findById(Integer id) {
+        return documentMapper.findById(id);
+    }
 }

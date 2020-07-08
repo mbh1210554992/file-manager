@@ -4,6 +4,7 @@ import com.jmy.model.Document;
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.DocumentService;
+import com.sun.xml.internal.ws.api.message.Attachment;
 import org.apache.ibatis.builder.ResultMapResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 @Controller
@@ -92,4 +97,21 @@ public class DocumentController {
         return new Result(ResultCode.SUCCESS,documentService.findAll());
     }
 
+    @RequestMapping("doDownload")
+    @ResponseBody
+    public byte[] doDownload(Integer id,HttpServletResponse response)
+            throws IOException{
+        //1.根据id执行查找操作
+        Document document=documentService.findById(id);
+        //2.设置下载内容类型以及响应头(固定格式)
+        response.setContentType("appliction/octet-stream");
+        String suffix = document.getPath().substring(document.getPath().lastIndexOf(".") + 1);
+        String fileName=URLEncoder.encode(document.getName(),"utf-8");
+        response.setHeader("Content-disposition",
+                "attachment;filename="+fileName+"."+suffix);
+        //3.获得指定文件的路径对象(java.nio.Path)
+        Path path= Paths.get(document.getPath());
+        //4.读取path路径对应的文件,并返回字节数组
+        return Files.readAllBytes(path);
+    }
 }

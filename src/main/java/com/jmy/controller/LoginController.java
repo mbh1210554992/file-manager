@@ -1,7 +1,6 @@
 package com.jmy.controller;
 
-import com.jmy.common.CommonResult;
-import com.jmy.common.exception.ServiceException;
+
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
 import org.apache.shiro.SecurityUtils;
@@ -26,7 +25,7 @@ public class LoginController {
 
     @RequestMapping("/user/login")
     @ResponseBody
-    public Result userLogin(@RequestBody Map<String,String> loginMap)throws ServiceException {
+    public Result userLogin(@RequestBody Map<String,String> loginMap) {
         String username = loginMap.get("username");
         String password = loginMap.get("password");
         password = new Md5Hash(password,username,3).toString();

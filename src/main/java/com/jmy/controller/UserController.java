@@ -47,7 +47,7 @@ public class UserController {
      */
     @RequestMapping("doValidById")
     @ResponseBody
-    public Result doValidById(Integer userId,Integer valid){
+    public Result doValidById(Integer userId,Integer valid) throws Exception {
         userService.validById(userId,valid);
         return new Result(ResultCode.SUCCESS);
 

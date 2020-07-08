@@ -5,9 +5,11 @@ $(document).ready(function(){
    .on("click",".btn-down",doDownload);
    doGetObjects();
    $('#tbodyId').on('click',"#update",doUpdate);
+	$('#tbodyId').on('click',"#download",doDownload);
 });
 
 function doUpdate(){
+	console.log("id是:"+$(this).parent().parent().data("id"))
     $(".content").load("file/editUI");
 }
 
@@ -16,7 +18,7 @@ function doBack(){
 }
 function doDownload(){
 	var id=$(this).parent().parent().data("id");
-	var url="attachment/doDownload.do?id="+id;
+	var url="file/doDownload?id="+id;
 	document.location.href=url;
 }
 function doGetObjects(){
@@ -33,6 +35,7 @@ function setTableBodyRows(list){
 	var tBody=$("#tbodyId");
 	tBody.empty();
 	for(var i in list){
+
 		var tr=$("<tr></tr>");
 		tr.data("id",list[i].id);
 		tr.append("<td>"+list[i].name+"</td>");
@@ -41,7 +44,7 @@ function setTableBodyRows(list){
 		tr.append("<td>"+list[i].publisher+"</td>");
 		tr.append("<td>"+list[i].deptName+"</td>");
 		tr.append("<td>"+list[i].publisherDate+"</td>");
-		tr.append('<td><button type="button" class =class="btn btn-primary">下载</button><button type="button" class="btn btn-primary" id="update">覆盖</button></td>')
+		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button><button type="button" class="btn btn-default" id="update">覆盖</button></td>')
 	    tBody.append(tr);
 	}
 }

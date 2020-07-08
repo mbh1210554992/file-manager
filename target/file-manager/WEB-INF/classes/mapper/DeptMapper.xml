@@ -12,12 +12,30 @@
         <result property="parentName" column="parent_name"/>
 
     </resultMap>
+    <insert id="insert">
+        insert into dept(name, parent_id,remark, operator, operator_time)
+        value(#{name}, #{parentId}, #{remark}, #{operator}, #{operatorTime})
+    </insert>
+    <update id="update">
+        update dept
+        set
+        name = #{name},
+        parent_id = #{parentId},
+        remark = #{remark},
+        operator = #{operator},
+        operator_time = #{operatorTime}
+        where id = #{id}
+
+    </update>
+    <delete id="deleteById">
+        delete from dept where id = #{deptId}
+    </delete>
     <select id="findObjects" resultType="map">
         SELECT d.id,d.name, p.name AS parent_name, d.parent_id as pid
         FROM dept d LEFT JOIN dept p
         on d.parent_id = p.id;
     </select>
-    <select id="findById" resultType="com.jmy.model.Dept">
+    <select id="findById" resultMap="deptResult">
         SELECT d1.name, d1.parent_id as parent_id, d2.name as parent_name ,d1.remark from dept d1
         left join dept d2 on  d1.parent_id = d2.id
         where d1.id = #{id};
@@ -27,5 +45,8 @@
             resultType="map">
        select id,parent_id,name
        from dept;
+    </select>
+    <select id="hasChild" resultType="java.lang.Integer">
+        select count(*) from dept where parent_id = #{deptId}
     </select>
 </mapper>

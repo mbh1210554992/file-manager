@@ -27,4 +27,7 @@
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
     </select>
+    <select id="findById" resultMap="documentResult">
+        select * from document where id = #{id}
+    </select>
 </mapper>

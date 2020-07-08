@@ -1,4 +1,5 @@
-<%@ page  contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+		 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <script type="text/javascript" src="${basePath}/js/attach/attach.js"></script>
@@ -25,7 +26,7 @@
 			</div>
 			<!-- 列表显示内容 -->
 			<div class="row col-md-12">
-				<table class="table table-bordered">
+				<table class="table table-bordered" >
 					<thead>
 						<tr>
 							<th>文件名</th>
@@ -39,8 +40,10 @@
 					</thead>
 					<tbody id="tbodyId"></tbody>
 				</table>
+				<%@include file="../common/page.jsp" %>
 			</div>
 		</form>
+
 	</div>
 
 

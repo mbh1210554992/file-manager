@@ -1,3 +1,15 @@
+var zTree;
+var setting = {
+	data : {
+		simpleData : {
+			enable : true,
+			idKey : "id",  //节点数据中保存唯一标识的属性名称
+			pIdKey : "parent_id",  //节点数据中保存其父节点唯一标识的属性名称
+			rootPId : null  //根节点id
+		}
+	}
+}
+
 $(document).ready(function(){
 	//点击返回按钮
 	$('#btn-return').click(doBack);
@@ -7,60 +19,73 @@ $(document).ready(function(){
 	//根据id查询用户信息
 	if(userId){
 		doFindObjectById(userId);
-	}else{
-		doLoadRoles();
 	}
+
+	$('#editUserForm').on('click','.load-sys-menu',doLoadZTreeNodes);
+	$("#menuLayer").on("click",".btn-cancle",doHideZtree)
+                       .on("click",".btn-confirm",doSetSelectedNode);
 });
 //点击保存/修改按钮
 function doSaveOrUpdate(){
 	if($('#editUserForm').valid()){   //用valid（），校验的文本框必须有name属性值
 		var params = getEditFormData();
-		if(params=='nochoose'){
-			alert('请选择用户角色！');
-			return false;
-		}
 		var userId = $('.content').data('userId');
-		var userPwd = userId?$('#newPwd').val():$('#userPwd').val();
-		params.password = userPwd;
+		//var userPwd = userId?$('#newPwd').val():$('#userPwd').val();
+		//params.password = userPwd;
 		params.id = userId;
-		var url = userId?'user/doUpdateObject.do':'user/doSaveObject.do';
-		$.post(url,params,function(result){
-			if(result.code==10000){
-				alert('操作成功！');
-			    doBack();
-			}else{
-				alert(result.message);
-			}
-		})
+		var url = userId?'user/updateUser':'user/addUser';
+		$.ajax({
+        　　type : "post",
+        　　url : url,
+        　　data : JSON.stringify(params),
+        　　contentType:"application/json",
+        　　dataType : "json",
+        　　success : function(data) {
+            　　if(data.code == 10000){
+            　　　　alert('操作成功！');
+                    doBack();
+            　　　　}else{
+            　　　　　alert(data.message);
+            　　　　}
+            　　}
+        })
 	}
+}
+
+//显示选择菜单
+function doLoadZTreeNodes(){
+	$('#menuLayer').css('display','block');
+	var url ='dept/doFindZtree';
+	$.getJSON(url,function(result){
+		if(result.code==10000){
+			zTree = $.fn.zTree.init($("#menuTree"), setting,result.data);
+		}else{
+			alert(result.message);
+		}
+	})
 }
 //获取表单参数
 function getEditFormData(){
 	var userName = $('#userName').val();
-	var email = $('#email').val();
-	var mobile = $('#mobile').val();
-	var roleIds = new Array();
-	$('input[name="checkedItem"]').each(function(){
-		if($(this).is(':checked')){
-			roleIds.push($(this).val());
-		}
-	})
-	if(roleIds.length==0){
-		return 'nochoose';
-	}
-	roleIds = roleIds.toString();
+	var password = $('#password').val();
+	var telephone = $('#telephone').val();
+	var remark = $('#remark').val();
+	var deptId = $('#editUserForm').data('deptId');
+
+
 	var params = {
 		'username':userName,
-		'email':email,
-		'mobile':mobile,
-		'roleIds':roleIds
+		'password':password,
+		'telephone':telephone,
+		'deptId':deptId,
+		'remark':remark
 	}
 	return params;
 }
 //点击返回按钮
 function doBack(){
 	doClearData();
-	$('.content').load('user/listUI.do');
+	$('.content').load('user/listUI');
 }
 //查询所有角色  -- 如果使修改，有roleIdList
 function doLoadRoles(roleIdList){
@@ -93,23 +118,25 @@ function doSetRoleList(roleList){
 }
 function doFindObjectById(userId){
 	var params  = {'userId':userId};
-	var url = 'user/doFindObjectById.do';
+	var url = 'user/doFindUserById';
 	$.post(url,params,function(result){
-		if(result.state==1){
+		if(result.code==10000){
 		 // console.log(JSON.stringify(result.data));
-		  doSetEditFormData(result.data.user,result.data.roleIds);  
+		  doSetEditFormData(result.data);
 		}else{
 		  alert(result.message);
 		}
 	});
 }
-function doSetEditFormData(user,roleIds){
+function doSetEditFormData(user){
 	$('#userName').val(user.username);
-	$('#userPwd').val(user.password);
+	$('#password').val(user.password);
 	$('#newPwdDiv').css('display','block');
-	$('#email').val(user.email);
-	$('#mobile').val(user.mobile);
-	doLoadRoles(roleIds);
+	$('#telephone').val(user.telephone);
+	$('#remark').val(user.remark);
+	$('#deptName').val(user.deptName);
+	$('#editUserForm').data('deptId',user.dept_Id);
+	//doLoadRoles(roleIds);
 }
 //点击返回，保存，修改按钮，清除editForm数据
 function doClearData(){
@@ -117,4 +144,19 @@ function doClearData(){
 	$('#newPwdDiv').css('display','none');
 	$('#roleList').empty();
 	$('.content').removeData('userId');
+}
+
+//隐藏选择菜单
+function doHideZtree(){
+	$('#menuLayer').css('display','none');
+
+}
+
+//获取选择菜单选中项
+function doSetSelectedNode(){
+	 var selectedNodes = zTree.getSelectedNodes();
+	 var node = selectedNodes[0];
+	 $('#menuLayer').css('display','none');
+	 $('#deptName').val(node.name);
+	 $('#editUserForm').data('deptId',node.id);
 }
