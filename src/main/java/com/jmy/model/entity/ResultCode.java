@@ -10,8 +10,10 @@ public enum ResultCode {
     SERVER_ERROR(false,99999,"抱歉，系统繁忙，请稍后重试！"),
 
     //---用户操作返回码----
-    MOBILE_PASSWORD_ERROR(false,20001,"用户名或密码错误！");
-    //---企业操作返回码----
+    MOBILE_PASSWORD_ERROR(false,20001,"用户名或密码错误！"),
+    USERNAME_ERROR(false,20002,"用户名已存在请重新填写"),
+    //---部门操作返回码----
+    DEPT_CHIRD_ERROR(false,30001,"该部门具有下级部门不能删除");
     //---权限操作返回码----
     //---其他操作返回码----
 

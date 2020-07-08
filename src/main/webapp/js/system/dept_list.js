@@ -135,13 +135,13 @@ function getSelectedPname(){
 }
   //删除菜单项
   function doDeleteObject(){
-	var menuId=getSelectedId();
-	if(menuId==-1){
+	var deptId=getSelectedId();
+	if(deptId==-1){
 		alert("请先选择");
 		return;
 	}
-	var params = {'menuId':menuId};
-	var url = 'menu/doDeleteObject.do';
+	var params = {'deptId':deptId};
+	var url = 'dept/doDeleteById';
 	$.post(url,params,function(result){
 		if(result.code==10000){
 			alert('删除成功！');

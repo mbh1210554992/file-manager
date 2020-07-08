@@ -19,12 +19,27 @@
             <li><a id="load-dept-id"><i class="fa fa-circle-o"></i>部门管理</a></li>
             <li><a id="load-user-id"><i class="fa fa-circle-o"></i>用户管理</a></li>
             <li><a id="load-perm-id"><i class="fa fa-circle-o"></i>权限管理</a></li>
-            <li><a id="load-file-id"><i class="fa fa-circle-o"></i>文档管理</a></li>
+            <li><a id="load-file-id"><i class="fa fa-circle-o"></i>文档后台管理</a></li>
           </ul>
         </li>
+         <li class="treeview">
+                  <a href="#">
+                    <i class="fa fa-files-o"></i>
+                    <span>文档管理</span>
+                    <span class="pull-right-container">
+                      <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu">
+                    <li><a id="load-upload-id"><i class="fa fa-circle-o"></i>文档上传</a></li>
+                    <li><a id="load-user-id"><i class="fa fa-circle-o"></i>文档排名</a></li>
+                    <li><a id="load-perm-id"><i class="fa fa-circle-o"></i>文档分类</a></li>
+                  </ul>
+                </li>
       </ul>
     </section>
     <!-- /.sidebar -->
+
   </aside>
 <script type="text/javascript">
 $('#load-project-id').click(function(){
@@ -57,6 +72,11 @@ $('#load-dept-id').click(function(){
 })
 $('#load-user-id').click(function(){
 	var url="user/listUI?t="+Math.random(1000);
+	$(".content").load(url);
+})
+
+$('#load-upload-id').click(function(){
+	var url="file/listUI?t="+Math.random(1000);
 	$(".content").load(url);
 })
 </script>

@@ -1,6 +1,8 @@
 package com.jmy.controller;
 
 import com.jmy.common.CommonResult;
+import com.jmy.common.exception.CommonException;
+import com.jmy.model.Dept;
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.DeptService;
@@ -39,6 +41,11 @@ public class DeptController {
         return "index";
     }
 
+    @RequestMapping("index2")
+    public String index2(){
+        return "index2";
+    }
+
     @ResponseBody
     @RequestMapping("doFindObjects")
     public Result findAll(){
@@ -55,5 +62,26 @@ public class DeptController {
     @ResponseBody
     public Result findZTree(){
         return new Result(ResultCode.SUCCESS, deptService.findZtreeNodes());
+    }
+
+    @RequestMapping("doDeleteById")
+    @ResponseBody
+    public Result deleteById(Integer deptId) throws CommonException {
+        deptService.deleteById(deptId);
+        return Result.SUCCESS();
+    }
+
+    @ResponseBody
+    @RequestMapping("addDept")
+    public Result addDept(@RequestBody Dept dept){
+        deptService.insert(dept);
+        return Result.SUCCESS();
+    }
+
+    @ResponseBody
+    @RequestMapping("updateDept")
+    public Result updateDept(@RequestBody Dept dept){
+        deptService.update(dept);
+        return Result.SUCCESS();
     }
 }

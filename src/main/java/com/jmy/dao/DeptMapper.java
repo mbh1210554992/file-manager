@@ -13,4 +13,8 @@ public interface DeptMapper {
     List<Map<String, Object>> findObjects();
     Dept findById(@Param("id")Integer id);
     List<Map<String,Object>> findZtreeNodes();
+    int hasChild(@Param("deptId") Integer deptId);
+    void deleteById(@Param("deptId") Integer deptId);
+    void insert(Dept dept);
+    void update(Dept dept);
 }

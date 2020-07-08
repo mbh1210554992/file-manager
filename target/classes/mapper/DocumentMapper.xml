@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmy.dao.DocumentMapper">
+    <resultMap id="documentResult" type="com.jmy.model.Document">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="abstr" column="abstr"/>
+        <result property="enableDown" column="enable_down"/>
+        <result property="path" column="path"/>
+        <result property="permId" column="perm_id"/>
+        <result property="publisher" column="publisher"/>
+        <result property="publisherDate" column="publisher_date"/>
+        <result property="publisherDept" column="publisher_dept"/>
+        <result property="size" column="size"/>
+        <result property="type" column="type"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="typeName" column="type_name"/>
+        <result property="deptName" column="dept_name"/>
+    </resultMap>
+    <insert id="insert">
+        insert into
+        document(name, path, abstr, type, size, publisher,publisher_dept,publisher_date,perm_id,view_count,enable_down)
+        value(#{name},#{path},#{abstr},#{type},#{size},#{publisher},#{publisherDept}, #{publisherDate},#{permId},#{viewCount},#{enableDown})
+    </insert>
+    <select id="findAll" resultMap="documentResult">
+        select d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+    </select>
+</mapper>

@@ -33,7 +33,7 @@ function doLoadEditPage(){
 		  alert("请先选择");return;
 		}
 		$('.content').data('userId',id);
-		console.log("id="+id);
+		console.log("userId="+id);
 	}
 	var url="user/editUI"
 	$(".content").load(url,function(){
@@ -76,7 +76,8 @@ function doGetObjects(){
 
 //初始化列表页面
 function setTableBodyRows(list){
-	var tBody=$('tbody');tBody.empty();
+	var tBody=$('tbody');
+	tBody.empty();
 	var tds='<td><input type="radio" name="checkedItem" value="[id]"></td>'+
 	'<td>[username]</td>'+
 	'<td>[telephone]</td>'+

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class fileTypeController {
+public class FileTypeController {
     @Autowired
     private FileTypeService fileTypeService;
 

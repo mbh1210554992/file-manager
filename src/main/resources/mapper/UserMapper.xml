@@ -13,13 +13,18 @@
         <result column="operator_time" property="operatorTime"/>
         <result column="dept_name" property="deptName"/>
     </resultMap>
+    <insert id="intsertUser">
+        insert into
+        user(username,telephone,password,remark,dept_id,operator,operator_time)
+        values(#{username},#{telephone},#{password},#{remark}, #{deptId},#{operator},#{operatorTime})
+    </insert>
     <select id="findByUsername" resultMap="userResult">
         select * from user
         where username = #{username}
     </select>
     <select id="findAllUer" resultMap="userResult">
         select u.*,d.name as dept_name from user u
-        join dept d on dept_id = d.id
+        left join dept d on dept_id = d.id
         <where>
             <if test="username!=null and username!=''">
                 username LIKE CONCAT('%',#{username},'%')
@@ -34,6 +39,11 @@
                 username LIKE CONCAT('%',#{username},'%')
             </if>
         </where>
+    </select>
+    <select id="findUserById" resultMap="userResult">
+        select user.*,dept.name as dept_name
+        from user join dept on dept_id = dept.id
+        where user.id= #{id};
     </select>
 
     <update id="validById">

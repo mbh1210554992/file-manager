@@ -1,19 +1,24 @@
 package com.jmy.service.impl;
 
+import com.jmy.common.exception.CommonException;
 import com.jmy.common.exception.ServiceException;
 import com.jmy.dao.UserMapper;
 import com.jmy.model.User;
 import com.jmy.model.entity.PageObject;
+import com.jmy.model.entity.ResultCode;
 import com.jmy.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-                public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
@@ -50,5 +55,24 @@ import java.util.Map;
         int i = userMapper.validById(userId,valid);
         if(i==-1)
             throw new ServiceException("切换用户启用禁用状态失败！");
+    }
+
+    @Override
+    public User findUserById(Integer id) {
+        return userMapper.findUserById(id);
+    }
+
+    @Override
+    public void intsertUser(User user) throws CommonException {
+        User Operator = (User) SecurityUtils.getSubject().getPrincipal();
+        User temp = userMapper.findByUsername(user.getUsername());
+        if(temp!=null){
+            throw new CommonException(ResultCode.USERNAME_ERROR);
+        }
+        String password = new Md5Hash(user.getPassword(),user.getUsername(),3).toString();
+        user.setPassword(password);
+        user.setOperator(Operator.getUsername());
+        user.setOperatorTime(new Date());
+        userMapper.intsertUser(user);
     }
 }
