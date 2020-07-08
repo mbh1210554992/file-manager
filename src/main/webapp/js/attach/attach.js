@@ -4,11 +4,10 @@ $(document).ready(function(){
    .on("click","#btn-return",doBack)
    .on("click",".btn-down",doDownload);
    doGetObjects();
-   //$('#tbodyId').on('click',"#update",doUpload);
+   $('#tbodyId').on('click',"#update",doUpdate);
 });
 
-function doUpload(){
-    console.log("覆盖文档");
+function doUpdate(){
     $(".content").load("file/editUI");
 }
 
@@ -42,7 +41,7 @@ function setTableBodyRows(list){
 		tr.append("<td>"+list[i].publisher+"</td>");
 		tr.append("<td>"+list[i].deptName+"</td>");
 		tr.append("<td>"+list[i].publisherDate+"</td>");
-		tr.append('<td><button class="btn btn-primary">下载</button><button class="btn btn-info" id="update">覆盖</button></td>')
+		tr.append('<td><button type="button" class =class="btn btn-primary">下载</button><button type="button" class="btn btn-primary" id="update">覆盖</button></td>')
 	    tBody.append(tr);
 	}
 }
