@@ -12,6 +12,7 @@ public enum ResultCode {
     //---用户操作返回码----
     MOBILE_PASSWORD_ERROR(false,20001,"用户名或密码错误！"),
     USERNAME_ERROR(false,20002,"用户名已存在请重新填写"),
+    USERNAME_VALID_ERROR(false,20003,"用户名已被禁用，请联系系统管理员！"),
     //---部门操作返回码----
     DEPT_CHIRD_ERROR(false,30001,"该部门具有下级部门不能删除");
     //---权限操作返回码----

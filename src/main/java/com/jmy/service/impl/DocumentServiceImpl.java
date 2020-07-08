@@ -34,25 +34,25 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public List<Document> findAll() {
         User operator = (User) SecurityUtils.getSubject().getPrincipal();
-        List<Document> list =  documentMapper.findAll();
-        List<Document> target = new ArrayList();
-        for(Document document : list){
-            if(operator.getDeptId().equals(document.getPublisherDept())){
-                target.add(document);
-            }
-            else if(document.getPermId() == 2){
-                Dept dept = deptService.findById(2);
-                Integer parentId = dept.getParentId();
-                List<Integer> deptIds = new ArrayList<>();
-                deptIds.add(dept.getId());
-                while(dept != null){
-                    dept = deptService.findById(parentId);
-                    parentId = dept.getId();
-                    deptIds.add(dept.getId());
-                }
-            }
-        }
-        return target;
+        List<Document> list =  documentMapper.findAll(operator.getUsername());
+//        List<Document> target = new ArrayList();
+//        for(Document document : list){
+//            if(operator.getDeptId().equals(document.getPublisherDept())){
+//                target.add(document);
+//            }
+//            else if(document.getPermId() == 2){
+//                Dept dept = deptService.findById(2);
+//                Integer parentId = dept.getParentId();
+//                List<Integer> deptIds = new ArrayList<>();
+//                deptIds.add(dept.getId());
+//                while(dept != null){
+//                    dept = deptService.findById(parentId);
+//                    parentId = dept.getId();
+//                    deptIds.add(dept.getId());
+//                }
+//            }
+//        }
+        return list;
     }
 
     @Override

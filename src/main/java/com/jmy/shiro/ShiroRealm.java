@@ -1,8 +1,11 @@
 package com.jmy.shiro;
 
 
+import com.jmy.common.exception.CommonException;
 import com.jmy.dao.UserMapper;
 import com.jmy.model.User;
+import com.jmy.model.entity.ResultCode;
+import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthenticatingRealm;
@@ -20,6 +23,7 @@ public class ShiroRealm extends AuthenticatingRealm {
      * @return
      * @throws AuthenticationException
      */
+    @SneakyThrows
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken token2 = (UsernamePasswordToken) token;
@@ -32,7 +36,7 @@ public class ShiroRealm extends AuthenticatingRealm {
             throw new UnknownAccountException("用户名或密码有误！");
         }
         if (user.getValid() == 0) {
-            throw new UnknownAccountException("用户名已被禁用，请联系系统管理员！");
+            throw new CommonException(ResultCode.USERNAME_VALID_ERROR);
         }
 
         /**

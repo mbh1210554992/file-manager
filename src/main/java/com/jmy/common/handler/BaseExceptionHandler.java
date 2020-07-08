@@ -4,6 +4,7 @@ package com.jmy.common.handler;
 import com.jmy.common.exception.CommonException;
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -47,5 +48,11 @@ public class BaseExceptionHandler {
     @ResponseBody
     public Result error(HttpServletRequest request, HttpServletResponse response,UnknownAccountException e){
         return new Result(ResultCode.MOBILE_PASSWORD_ERROR);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    @ResponseBody
+    public Result error(HttpServletRequest request, HttpServletResponse response,AuthenticationException e){
+        return new Result(ResultCode.USERNAME_VALID_ERROR);
     }
 }

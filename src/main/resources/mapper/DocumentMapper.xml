@@ -26,6 +26,7 @@
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
+        where d.publisher = #{publisher}
     </select>
     <select id="findById" resultMap="documentResult">
         select * from document where id = #{id}

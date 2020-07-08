@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface DocumentMapper {
     void insert(Document document);
-    List<Document> findAll();
+    List<Document> findAll(@Param("publisher")String publisher);
     Document findById(@Param("id")Integer id);
 }
