@@ -8,5 +8,6 @@
 </head>
 <body>
    <h1>error:${exp}</h1>
+   <a href="localhost:8080/file-manager/login">点击登录</a>
 </body>
 </html>

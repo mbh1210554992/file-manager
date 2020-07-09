@@ -14,9 +14,10 @@ public enum ResultCode {
     USERNAME_ERROR(false,20002,"用户名已存在请重新填写"),
     USERNAME_VALID_ERROR(false,20003,"用户名已被禁用，请联系系统管理员！"),
     //---部门操作返回码----
-    DEPT_CHIRD_ERROR(false,30001,"该部门具有下级部门不能删除");
+    DEPT_CHIRD_ERROR(false,30001,"该部门具有下级部门不能删除"),
     //---权限操作返回码----
     //---其他操作返回码----
+    FILE_DELETE_ERROR(false,40001,"文件不存在或已经被删除");
 
     //操作是否成功
     boolean success;

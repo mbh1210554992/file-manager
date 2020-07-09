@@ -1,7 +1,7 @@
 package com.jmy.dao;
 
 
-import com.jmy.model.FileType;
+import com.jmy.model.entity.FileType;
 import org.apache.ibatis.annotations.Param;
 
 public interface FileTypeMapper {

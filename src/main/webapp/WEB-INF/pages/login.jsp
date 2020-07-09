@@ -81,6 +81,7 @@ function doLogin(){
             if(result.code==10000){
                 //用户校验成功，跳转到主页面
                 location.href='index.jsp';
+                console.log("登陆成功")
             }else{
                 $('#errorMessage').parent().parent().css('display','block');
                 $('#errorMessage').text(result.message);

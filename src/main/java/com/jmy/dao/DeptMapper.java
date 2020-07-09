@@ -1,6 +1,6 @@
 package com.jmy.dao;
 
-import com.jmy.model.Dept;
+import com.jmy.model.entity.Dept;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

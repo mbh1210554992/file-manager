@@ -1,8 +1,7 @@
 package com.jmy.controller;
 
-import com.jmy.common.CommonResult;
 import com.jmy.common.exception.CommonException;
-import com.jmy.model.Dept;
+import com.jmy.model.entity.Dept;
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.DeptService;

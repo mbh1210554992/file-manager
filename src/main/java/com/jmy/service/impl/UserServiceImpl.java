@@ -3,8 +3,8 @@ package com.jmy.service.impl;
 import com.jmy.common.exception.CommonException;
 
 import com.jmy.dao.UserMapper;
-import com.jmy.model.User;
-import com.jmy.model.entity.PageObject;
+import com.jmy.model.entity.User;
+import com.jmy.model.PageObject;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.UserService;
 import org.apache.shiro.SecurityUtils;

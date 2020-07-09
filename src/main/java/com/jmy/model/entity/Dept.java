@@ -1,4 +1,4 @@
-package com.jmy.model;
+package com.jmy.model.entity;
 
 import lombok.*;
 

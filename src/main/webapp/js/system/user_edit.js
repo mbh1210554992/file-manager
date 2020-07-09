@@ -142,7 +142,6 @@ function doSetEditFormData(user){
 function doClearData(){
 	$('#editUserForm .dynamicClear').val('');
 	$('#newPwdDiv').css('display','none');
-	$('#roleList').empty();
 	$('.content').removeData('userId');
 }
 

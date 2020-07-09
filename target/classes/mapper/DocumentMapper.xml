@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmy.dao.DocumentMapper">
-    <resultMap id="documentResult" type="com.jmy.model.Document">
+    <resultMap id="documentResult" type="com.jmy.model.entity.Document">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="abstr" column="abstr"/>
@@ -20,15 +20,51 @@
     <insert id="insert">
         insert into
         document(name, path, abstr, type, size, publisher,publisher_dept,publisher_date,perm_id,view_count,enable_down)
-        value(#{name},#{path},#{abstr},#{type},#{size},#{publisher},#{publisherDept}, #{publisherDate},#{permId},#{viewCount},#{enableDown})
+        value(#{name},#{path},#{abstr},#{type},#{size},#{publisher},#{publisherDept}, #{publisherDate},#{permId},0,#{enableDown})
     </insert>
+    <update id="update">
+        update document
+        set
+        name = #{name},
+        <if test="path != null and path != ''">
+            path = #{path},
+        </if>
+        abstr = #{abstr},
+        type = #{type},
+        <if test="size != null and size != ''">
+             size = #{size},
+        </if>
+        publisher = #{publisher},
+        publisher_dept = #{publisherDept},
+        publisher_date = #{publisherDate},
+        perm_id = #{permId},
+        view_count = 0
+        where id=#{id}
+    </update>
+    <update id="updateCount">
+        update document
+        set view_count = view_count+1
+        where id = #{documentId}
+    </update>
+    <delete id="deleteById">
+        delete from document where id = #{documentId}
+    </delete>
     <select id="findAll" resultMap="documentResult">
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
         where d.publisher = #{publisher}
+        limit #{startIndex},#{pageSize};
     </select>
     <select id="findById" resultMap="documentResult">
         select * from document where id = #{id}
+    </select>
+    <select id="getRowCount" resultType="java.lang.Integer">
+        select count(*) from document where publisher = #{publisher}
+    </select>
+    <select id="getALL" resultMap="documentResult">
+        select d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
     </select>
 </mapper>

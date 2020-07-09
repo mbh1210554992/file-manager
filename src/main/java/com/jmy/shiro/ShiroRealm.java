@@ -3,7 +3,7 @@ package com.jmy.shiro;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.dao.UserMapper;
-import com.jmy.model.User;
+import com.jmy.model.entity.User;
 import com.jmy.model.entity.ResultCode;
 import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;

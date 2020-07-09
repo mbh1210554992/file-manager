@@ -9,7 +9,6 @@
 <meta HTTP-EQUIV="Expires" CONTENT="0">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <title>Insert title here</title>
-
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-datepicker.min.css" />
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-table.min.css">

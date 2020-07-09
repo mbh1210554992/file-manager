@@ -1,4 +1,4 @@
-package com.jmy.model.entity;
+package com.jmy.model;
 
 import java.io.Serializable;
 

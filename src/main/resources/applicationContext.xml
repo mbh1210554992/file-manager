@@ -66,7 +66,7 @@
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
         <property name="loginUrl" value="/login" />
         <!-- 登录成功后的页面 -->
-        <property name="successUrl" value="/dept/index" />
+
         <!-- 权限认证失败，则跳转到指定页面 -->
         <property name="unauthorizedUrl"  value="error" />  <!-- 登录后访问没有权限的页面后跳转的页面 -->
         <!-- Shiro连接约束配置,即过滤链的定义 -->
@@ -83,7 +83,10 @@
                 /bootstrap/** = anon
                 /jquery/** = anon
                 /pages/** = anon
+                /mainIndex/** = anon
+                /file/** = anon
                 /logout.do = logout
+
                 <!-- 剩余其他路径，必须认证通过才可以访问 -->
                 /** = authc
             </value>

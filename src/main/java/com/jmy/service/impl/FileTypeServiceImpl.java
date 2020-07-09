@@ -1,7 +1,7 @@
 package com.jmy.service.impl;
 
 import com.jmy.dao.FileTypeMapper;
-import com.jmy.model.FileType;
+import com.jmy.model.entity.FileType;
 import com.jmy.service.FileTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

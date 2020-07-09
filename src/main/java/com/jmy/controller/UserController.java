@@ -1,7 +1,7 @@
 package com.jmy.controller;
 
 import com.jmy.common.exception.CommonException;
-import com.jmy.model.User;
+import com.jmy.model.entity.User;
 import com.jmy.model.entity.Result;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.UserService;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller

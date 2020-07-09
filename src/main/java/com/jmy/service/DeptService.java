@@ -1,8 +1,7 @@
 package com.jmy.service;
 
 import com.jmy.common.exception.CommonException;
-import com.jmy.model.Dept;
-import org.apache.ibatis.annotations.Param;
+import com.jmy.model.entity.Dept;
 
 import java.util.List;
 import java.util.Map;

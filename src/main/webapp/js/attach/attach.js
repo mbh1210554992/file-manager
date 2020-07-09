@@ -1,16 +1,31 @@
 $(document).ready(function(){
-   $("#uploadFormId")
-   .on("click","#btn-upload",doUpload)
-   .on("click","#btn-return",doBack)
-   .on("click",".btn-down",doDownload);
+
    doGetObjects();
    $('#tbodyId').on('click',"#update",doUpdate);
-	$('#tbodyId').on('click',"#download",doDownload);
+	$('#tbodyId').on('click',"#download",doDownload)
+	.on('click','#delete',doDelete);
+
 });
 
+function doDelete(){
+    var documentId = $(this).parent().parent().data('id')
+    console.log("删除的id="+documentId);
+    var url = "file/deleteDocument?documentId="+documentId
+    $.getJSON(url,function(result){
+       if(result.code == 10000){
+           alert(result.message);
+
+       }else{
+            alert(result.message);
+       }
+       doGetObjects();
+    });
+}
+
 function doUpdate(){
-	console.log("id是:"+$(this).parent().parent().data("id"))
-    $(".content").load("file/editUI");
+	var documentId = $(this).parent().parent().data('id');
+	$('.content').data('documentId',documentId)
+    $('.content').load('file/editUI');
 }
 
 function doBack(){
@@ -20,12 +35,22 @@ function doDownload(){
 	var id=$(this).parent().parent().data("id");
 	var url="file/doDownload?id="+id;
 	document.location.href=url;
+	doGetObjects();
 }
 function doGetObjects(){
 	var url="file/getAllDocument";
-	$.getJSON(url,function(result){
+	var pageCurrent=$("#pageId").data("pageCurrent");
+    	if(!pageCurrent){
+    		pageCurrent=1;
+    	}
+    var params = {
+        pageCurrent : pageCurrent
+    }
+
+	$.getJSON(url,params,function(result){
 		if(result.code == 10000){
-			setTableBodyRows(result.data);
+			setTableBodyRows(result.data.list);
+			setPagination(result.data.pageObject);
 		}else{
 			alert(result.message);
 		}
@@ -44,8 +69,9 @@ function setTableBodyRows(list){
 		tr.append("<td>"+list[i].publisher+"</td>");
 		tr.append("<td>"+list[i].deptName+"</td>");
 		tr.append("<td>"+list[i].publisherDate+"</td>");
+		tr.append("<td>"+list[i].viewCount+"</td>");
 		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button>' +
-			'<button type="button" class="btn btn-info" id="update">覆盖</button>' +
+			'<button type="button" class="btn btn-info" id="update">修改</button>' +
 			'<button type="button" class="btn btn-danger" id="delete">删除</button></td>')
 	    tBody.append(tr);
 	}

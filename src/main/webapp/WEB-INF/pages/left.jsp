@@ -79,4 +79,13 @@ $('#load-upload-id').click(function(){
 	var url="file/listUI?t="+Math.random(1000);
 	$(".content").load(url);
 })
+$('#load-file-id').click(function(){
+	var url="file/listUI?t="+Math.random(1000);
+	$(".content").load(url);
+})
+
+$('#load-perm-id').click(function(){
+	var url="perm/listUI?t="+Math.random(1000);
+	$(".content").load(url);
+})
 </script>

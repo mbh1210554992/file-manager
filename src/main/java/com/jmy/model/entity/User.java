@@ -1,8 +1,9 @@
-package com.jmy.model;
+package com.jmy.model.entity;
 
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +21,5 @@ public class User {
     private Date operatorTime;
     private Integer valid;
     private String deptName;
+    List<Permission> permissions;
 }

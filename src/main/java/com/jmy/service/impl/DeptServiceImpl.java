@@ -2,8 +2,8 @@ package com.jmy.service.impl;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.dao.DeptMapper;
-import com.jmy.model.Dept;
-import com.jmy.model.User;
+import com.jmy.model.entity.Dept;
+import com.jmy.model.entity.User;
 import com.jmy.model.entity.ResultCode;
 import com.jmy.service.DeptService;
 import org.apache.shiro.SecurityUtils;

@@ -1,10 +1,8 @@
 package com.jmy.service;
 
 import com.jmy.common.exception.CommonException;
-import com.jmy.model.User;
-import org.apache.ibatis.annotations.Param;
+import com.jmy.model.entity.User;
 
-import java.util.List;
 import java.util.Map;
 
 public interface UserService {
