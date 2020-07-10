@@ -7,7 +7,7 @@
 	<div class="page-header">
 		<div class="page-title" style="padding-bottom: 5px">
 			<ol class="breadcrumb">
-				<li class="active" id="titleId">编辑用户11</li>
+				<li class="active" id="titleId">编辑用户</li>
 			</ol>
 		</div>
 	</div>
@@ -19,18 +19,13 @@
 						<input type="text" name="userName" id="userName" placeholder="登录账号" class="form-control dynamicClear required">
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group " id ="password">
 					<div class="col-sm-2 control-label"><font color="red">*</font>密码：</div>
 					<div class="col-sm-10">
 						<input type="password" name="password" id="password" placeholder="密码" class="form-control dynamicClear required">
 					</div>
 				</div>
-				<div class="form-group" id="newPwdDiv" style="display:none">
-					<div class="col-sm-2 control-label"><font color="red">*</font>新密码：</div>
-					<div class="col-sm-10">
-						<input type="password" name="newPwd" id="newPwd" placeholder="新密码" class="form-control dynamicClear required">
-					</div>
-				</div>
+
 				<div class="form-group">
 					<div class="col-sm-2 control-label">手机号：</div>
                         <div class="col-sm-10">
@@ -43,8 +38,22 @@
                 		<div class="col-sm-10">
                 			<input type="text" id="deptName" readonly="readonly"
                 				class="form-control required dynamicClear load-sys-menu" style="cursor: pointer;">
-                		</div>
                 	</div>
+                </div>
+
+               <div class="form-group">
+                    <div class="col-sm-2 control-label">用户角色：</div>
+                    <div class="col-sm-10">
+                        <div class="dropdown">
+                            <select id="roleId" class="form-control" name = "roleId">
+                                <option value="1">超级管理员</option>
+                                <option value="2">普通管理员</option>
+                                <option value="3">普通用户</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <div class="col-sm-2 control-label">备注：</div>

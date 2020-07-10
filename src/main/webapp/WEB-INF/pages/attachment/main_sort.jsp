@@ -39,7 +39,6 @@
 					</thead>
 					<tbody id="tbodyId"></tbody>
 				</table>
-				<%@include file="../common/page.jsp" %>
 			</div>
 		</form>
 

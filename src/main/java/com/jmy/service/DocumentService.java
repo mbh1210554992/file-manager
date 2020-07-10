@@ -8,7 +8,8 @@ import java.util.Map;
 
 public interface DocumentService {
     void insert(Document document, MultipartFile multipartFile);
-    Map<String, Object> findAll(Integer pageCurrent);
+    Map<String, Object> findAllByUser(Integer pageCurrent);
+    Map<String, Object> findAllByPerm(Integer pageCurrent);
     Document findById(Integer id);
     void deleteById(Integer documentId) throws CommonException;
     void update(Document document,MultipartFile file);

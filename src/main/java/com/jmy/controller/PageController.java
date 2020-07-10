@@ -41,11 +41,11 @@ public class PageController {
         return "attachment/main_sort";
     }
 
-    @ResponseBody
-    @RequestMapping("/mainIndex/getAll")
-    public Result getAll(){
-        return new Result(ResultCode.SUCCESS,documentMapper.getALL());
-    }
+//    @ResponseBody
+//    @RequestMapping("/mainIndex/getAll")
+//    public Result getAll(){
+//        return new Result(ResultCode.SUCCESS,documentMapper.getALL());
+//    }
 
     @ResponseBody
     @RequestMapping("/mainIndex/isLogin")
@@ -56,6 +56,8 @@ public class PageController {
         }
         return Result.SUCCESS();
     }
+
+
 
 
 }

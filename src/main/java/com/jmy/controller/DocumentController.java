@@ -52,8 +52,14 @@ public class DocumentController {
 
     @ResponseBody
     @RequestMapping("getAllDocument")
-    public Result findAll(Integer pageCurrent){
-        return new Result(ResultCode.SUCCESS,documentService.findAll(pageCurrent));
+    public Result findAllByUser(Integer pageCurrent){
+        return new Result(ResultCode.SUCCESS,documentService.findAllByUser(pageCurrent));
+    }
+
+    @ResponseBody
+    @RequestMapping("getDocuments")
+    public Result findAllByPerm(Integer pageCurrent){
+        return new Result(ResultCode.SUCCESS,documentService.findAllByPerm(pageCurrent));
     }
 
     @ResponseBody

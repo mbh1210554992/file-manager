@@ -14,4 +14,5 @@ public interface UserMapper {
     int validById(@Param("id")Integer id,@Param("valid")Integer valid);
     User findUserById(@Param("id")Integer id);
     void intsertUser(User user);
+    void updateUser(User user);
 }

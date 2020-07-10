@@ -1,6 +1,7 @@
 package com.jmy.service.impl;
 
 import com.jmy.common.exception.CommonException;
+import com.jmy.dao.DeptMapper;
 import com.jmy.dao.DocumentMapper;
 import com.jmy.model.entity.Document;
 import com.jmy.model.entity.User;
@@ -23,6 +24,9 @@ public class DocumentServiceImpl implements DocumentService {
     @Autowired
     private DocumentMapper documentMapper;
     @Autowired
+    private DeptMapper deptMapper;
+
+    @Autowired
     private DeptService deptService;
 
     @Override
@@ -37,13 +41,13 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public Map<String, Object> findAll(Integer pageCurrent) {
+    public Map<String, Object> findAllByUser(Integer pageCurrent) {
         User operator = (User) SecurityUtils.getSubject().getPrincipal();
         int pageSize=5;
         //1.2计算当前页开始查找的位置
         int startIndex=(pageCurrent-1)*pageSize;
-        List<Document> list =  documentMapper.findAll(operator.getUsername(),startIndex, pageSize);
-        int rowCount = documentMapper.getRowCount(operator.getUsername());
+        List<Document> list =  documentMapper.findAllByUser(operator.getUsername(),startIndex, pageSize);
+        int rowCount = documentMapper.getRowCountByUser(operator.getUsername());
         PageObject pageObject=new PageObject();
         pageObject.setRowCount(rowCount);
         pageObject.setPageSize(pageSize);
@@ -55,24 +59,64 @@ public class DocumentServiceImpl implements DocumentService {
         map.put("list", list);
         //3.2封装分页对象信息
         map.put("pageObject", pageObject);
-//        List<Document> target = new ArrayList();
-//        for(Document document : list){
-//            if(operator.getDeptId().equals(document.getPublisherDept())){
-//                target.add(document);
-//            }
-//            else if(document.getPermId() == 2){
-//                Dept dept = deptService.findById(2);
-//                Integer parentId = dept.getParentId();
-//                List<Integer> deptIds = new ArrayList<>();
-//                deptIds.add(dept.getId());
-//                while(dept != null){
-//                    dept = deptService.findById(parentId);
-//                    parentId = dept.getId();
-//                    deptIds.add(dept.getId());
-//                }
-//            }
-//        }
         return map;
+    }
+
+    @Override
+    public Map<String, Object> findAllByPerm(Integer pageCurrent) {
+        int pageSize=5;
+        //1.2计算当前页开始查找的位置
+        int startIndex=(pageCurrent-1)*pageSize;
+
+        User operator = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Document> target = new ArrayList<>();
+        int rowCount = 0;
+        if(operator == null){
+            target = documentMapper.findAll(startIndex, pageSize);
+            rowCount = documentMapper.getRowCountByPublic();
+        }else{
+            Integer deptId = operator.getDeptId();
+            String userName = operator.getUsername();
+            List<Integer> highDeptId = getHighDeptId(deptId);
+            List<Integer> lowDeptId = getLowDeptId(deptId);
+            target = documentMapper.getAllDocumentByPerm(userName,deptId,highDeptId,lowDeptId,startIndex, pageSize);
+            rowCount = documentMapper.getRowCountByPerm(userName,deptId,highDeptId,lowDeptId);
+        }
+
+        PageObject pageObject=new PageObject();
+        pageObject.setRowCount(rowCount);
+        pageObject.setPageSize(pageSize);
+        pageObject.setPageCurrent(pageCurrent);
+        pageObject.setStartIndex(startIndex);
+        Map<String,Object> map=
+                new HashMap<String,Object>();
+        //3.1封装当前页数据
+        map.put("list", target);
+        //3.2封装分页对象信息
+        map.put("pageObject", pageObject);
+        return map;
+    }
+
+    private List<Integer> getHighDeptId(Integer deptId){
+        List<Integer> list = new ArrayList<>();
+        list.add(deptId);
+        Integer parentId = deptMapper.findParentId(deptId);
+        while (parentId != null && parentId != 0){
+            list.add(parentId);
+            parentId = deptMapper.findParentId(parentId);
+        }
+        return list;
+    }
+
+    private List<Integer> getLowDeptId(Integer deptId){
+        List<Integer> list = new ArrayList<>();
+        list.add(deptId);
+        List<Integer> childIds = deptMapper.findChildId(deptId);
+        while(childIds !=null && !childIds.isEmpty()){
+            list.addAll(childIds);
+            childIds = deptMapper.findChildIdByList(childIds);
+        }
+        return list;
     }
 
     @Override

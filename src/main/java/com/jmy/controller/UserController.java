@@ -59,5 +59,11 @@ public class UserController {
         return new Result(ResultCode.SUCCESS);
     }
 
+    @ResponseBody
+    @RequestMapping("updateUser")
+    public Result updateUser(@RequestBody User user){
+        return Result.SUCCESS();
+    }
+
 
 }

@@ -2,7 +2,16 @@ $(document).ready(function(){
 //    $('#userFormHead').on('click','.btn-search',doQueryObjects)
 //    $('#userFormHead').on('click','.btn-add,.btn-update',doLoadEditPage)
     doGetObjects();
-    $('#perm').click(doPerm);
+    //$('#perm').click(doPerm);
+
+    $('#tbody').on('click',"#setPerm",showModel);
+    $("#myModal")
+    	//hidden.bs.modal为固定写法表示模态框隐藏事件
+    .on("hidden.bs.modal",function(){
+        //.ok上移除click事件
+        $(this).off("click","#perm");
+        $(this).removeData("id");
+    });
 });
 
 function doPerm(){
@@ -10,9 +19,42 @@ function doPerm(){
      $.each($('input:checkbox:checked'),function(){
         permIds+=$(this).val()+",";
     })
+    var id = $('#myModal').data('id');
     permIds = permIds.substring(0,permIds.length-1);
-    console.log(permIds);
+    var params = {
+        id : id,
+        permIds : permIds
+    }
 
+    $.getJSON('role/setRolePerm',params,function(result){
+           if(result.code == 10000){
+                alert("分配成功！");
+                 $('#myModal').modal('hide');
+           }else{
+                alert(result.message);
+                $('#myModal').modal('hide');
+           }
+    })
+}
+
+function showModel(){
+    $('#myModal').modal('show');
+    var id = $(this).parent().parent().data("id");
+    $('#myModal').data('id',id);
+    var url = 'role/getPerm?roleId='+id;
+    $.getJSON(url,function(result){
+           if(result.code = 10000){
+           $('.permCheckBox').prop("checked", false);
+           var permIds = result.data;
+            for(var i in permIds){
+                var id = '#inlineCheckbox'+permIds[i];
+                $(id).prop('checked',true);
+                }
+            }else{
+                alert(result.message)
+            }
+
+           })
 }
 /*禁用启用用户信息*/
 function doValidById(){
@@ -66,6 +108,7 @@ function doQueryObjects(){
 	$("#pageId").data('pageCurrent',1);
 	doGetObjects();
 }
+
 function doGetObjects(){
 	var pageCurrent=$("#pageId").data("pageCurrent");
 	if(!pageCurrent){
@@ -73,7 +116,7 @@ function doGetObjects(){
 	}
 	var params = getQueryFormData();
 	params.pageCurrent=pageCurrent;
-	var url = 'user/doGetUsers';
+	var url = 'role/doGetRoles';
 	$.post(url,params,function(result){
 		if(result.code==10000){
 			setTableBodyRows(result.data.list);
@@ -88,22 +131,15 @@ function doGetObjects(){
 function setTableBodyRows(list){
 	var tBody=$('tbody');
 	tBody.empty();
-	var tds='<td>[username]</td>'+
-	'<td>[telephone]</td>'+
-	'<td>[deptName]</td>'+
-	'<td><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">分配权限</button></td>';
 	for(var i in list){
-//		var state = list[i].valid==0?'<span class="label label-danger">禁用</span>':'<span class="label label-success">启用</span>';
-//		var stateStr = list[i].valid==0?'启用':'禁用';
-//		var validchange = list[i].valid==0?'1':'0';
-		var tr=$('<tr></tr>');
-		tr.data('userId',list[i].id);
-	    tr.append(
-	    tds.replace('[username]',list[i].username)
-	    .replace('[telephone]',list[i].telephone)
-	    .replace('[deptName]',list[i].deptName))
-	    tBody.append(tr);
-	}
+
+    var tr=$("<tr></tr>");
+    tr.data("id",list[i].id);
+    tr.append("<td>"+list[i].id+"</td>");
+    tr.append("<td>"+list[i].name+"</td>");
+    tr.append('<td><button type="button" class ="btn btn-default" id="setPerm">分配权限</button>')
+    tBody.append(tr);
+    }
 }
 //获取条件查询条件
 function getQueryFormData(){

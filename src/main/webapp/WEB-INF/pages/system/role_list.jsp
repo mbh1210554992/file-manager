@@ -8,7 +8,7 @@
     <div class="page-header">
 		<div class="page-title" style="padding-bottom: 5px">
 			<ol class="breadcrumb">
-			  <li class="active" id="titleId">用户权限管理</li>
+			  <li class="active" id="titleId">角色管理</li>
 			</ol>
 		</div>
 	</div>
@@ -18,9 +18,8 @@
 			<table class="table table-bordered" id="userTable">
 				<thead>
 					<tr>
-						<th>用户名</th>
-						<th>手机号</th>
-						<th>所属部门</th>
+						<th>角色ID</th>
+						<th>角色名称</th>
 						<th>操作</th>
 					</tr>
 				</thead>
@@ -39,13 +38,16 @@
                 </div>
                 <div class="modal-body">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox1" value="1"> 删除文档
+                        <input type="checkbox" id="inlineCheckbox1" class="permCheckBox" value="1"> 删除文档
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox2" value="2"> 删除文档评论
+                        <input type="checkbox" id="inlineCheckbox2" class="permCheckBox" value="2"> 删除文档评论
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox3" value="3"> 上传文档
+                        <input type="checkbox" id="inlineCheckbox3" class="permCheckBox" value="3"> 上传文档
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" class="permCheckBox" value="4"> 下载文档
                     </label>
                 </div>
                 <div class="modal-footer">
@@ -55,4 +57,27 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
 </div>
-<script type="text/javascript" src="${basePath}/js/system/perm_list.js"></script>
+<script type="text/javascript" src="${basePath}/js/system/role_list.js"></script>
+<script type="text/javascript">
+$('#perm').click(doPerm);
+
+function doPerm(){
+    var permIds="";
+     $.each($('input:checkbox:checked'),function(){
+        permIds+=$(this).val()+",";
+    })
+    var id = $('#myModal').data('id');
+    permIds = permIds.substring(0,permIds.length-1);
+    var params = {
+        id : id,
+        permIds : permIds
+    }
+
+    $.getJSON('role/setRolePerm',params,function(result){
+           if(result.code == 10000){
+                alert("分配成功！");
+                 $('#myModal').modal('hide');
+           }
+    })
+}
+</script>

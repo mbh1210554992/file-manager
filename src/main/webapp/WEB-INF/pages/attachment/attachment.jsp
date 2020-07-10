@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <script type="text/javascript" src="${basePath}/js/attach/attach.js"></script>
 <script type="text/javascript" src="${basePath}/js/common/page.js"></script>
@@ -20,7 +21,11 @@
 			<div class="row page-search">
 			 <div class="col-md-12">
 				<ul class="list-unstyled list-inline">
-					<li class='O1'><button type="button" class="btn btn-primary btn-upload" >上传</button></li>
+					<li class='O1'>
+					    <shiro:hasPermission name="file:upload">
+					        <button type="button" class="btn btn-primary btn-upload" >上传</button>
+					    </shiro:hasPermission>
+					</li>
 				</ul>
 			  </div>
 			</div>
@@ -53,6 +58,27 @@
         var url="file/editUI?t="+Math.random(1000);
         $(".content").load(url);
     })
+
+    function setTableBodyRows(list){
+    	var tBody=$("#tbodyId");
+    	tBody.empty();
+    	for(var i in list){
+
+    		var tr=$("<tr></tr>");
+    		tr.data("id",list[i].id);
+    		tr.append("<td>"+list[i].name+"</td>");
+    		tr.append("<td>"+list[i].typeName+"</td>");
+    		tr.append("<td>"+list[i].abstr+"</td>");
+    		tr.append("<td>"+list[i].publisher+"</td>");
+    		tr.append("<td>"+list[i].deptName+"</td>");
+    		tr.append("<td>"+list[i].publisherDate+"</td>");
+    		tr.append("<td>"+list[i].viewCount+"</td>");
+    		tr.append('<td><shiro:hasPermission name="file:download"><button type="button" class ="btn btn-default" id="download">下载</button></shiro:hasPermission>' +
+    			'<shiro:hasPermission name="file:update"><button type="button" class="btn btn-info" id="update">修改</button></shiro:hasPermission>' +
+    			'<shiro:hasPermission name="file:delete"><button type="button" class="btn btn-danger" id="delete">删除</button></shiro:hasPermission></td>')
+    	    tBody.append(tr);
+    	}
+    }
 </script>
 
 

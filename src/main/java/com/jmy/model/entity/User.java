@@ -21,5 +21,6 @@ public class User {
     private Date operatorTime;
     private Integer valid;
     private String deptName;
-    List<Permission> permissions;
+    private Integer roleId;
+    Role role;
 }

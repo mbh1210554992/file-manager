@@ -17,4 +17,8 @@ public interface DeptMapper {
     void deleteById(@Param("deptId") Integer deptId);
     void insert(Dept dept);
     void update(Dept dept);
+    Integer findParentId(@Param("deptId")Integer deptId);
+    List<Integer> findChildId(@Param("deptId")Integer deptId);
+    List<Integer> findChildIdByList(@Param("deptIds")List<Integer> deptIds);
+
 }

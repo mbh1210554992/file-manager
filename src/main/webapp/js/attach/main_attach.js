@@ -46,11 +46,20 @@ function doDownload(){
 
 }
 function doGetObjects(){
-	var url="mainIndex/getAll";
+	var url="file/getDocuments";
+	var pageCurrent=$("#pageId").data("pageCurrent");
+        	if(!pageCurrent){
+        		pageCurrent=1;
+        	}
+        var params = {
+            pageCurrent : pageCurrent
+        }
 
-	$.getJSON(url,function(result){
+    console.log('当前页数为：'+params.pageCurrent);
+	$.getJSON(url,params,function(result){
 		if(result.code == 10000){
-			setTableBodyRows(result.data);
+			setTableBodyRows(result.data.list);
+			setPagination(result.data.pageObject);
 		}else{
 			alert(result.message);
 		}

@@ -47,6 +47,7 @@ function doGetObjects(){
         pageCurrent : pageCurrent
     }
 
+
 	$.getJSON(url,params,function(result){
 		if(result.code == 10000){
 			setTableBodyRows(result.data.list);
@@ -56,26 +57,7 @@ function doGetObjects(){
 		}
 	});
 }
-function setTableBodyRows(list){
-	var tBody=$("#tbodyId");
-	tBody.empty();
-	for(var i in list){
 
-		var tr=$("<tr></tr>");
-		tr.data("id",list[i].id);
-		tr.append("<td>"+list[i].name+"</td>");
-		tr.append("<td>"+list[i].typeName+"</td>");
-		tr.append("<td>"+list[i].abstr+"</td>");
-		tr.append("<td>"+list[i].publisher+"</td>");
-		tr.append("<td>"+list[i].deptName+"</td>");
-		tr.append("<td>"+list[i].publisherDate+"</td>");
-		tr.append("<td>"+list[i].viewCount+"</td>");
-		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button>' +
-			'<button type="button" class="btn btn-info" id="update">修改</button>' +
-			'<button type="button" class="btn btn-danger" id="delete">删除</button></td>')
-	    tBody.append(tr);
-	}
-}
 /*点击文件上传按钮执行此函数*/
 function doUpload(){
 	//异步提交表单($.ajaxSubmit为异步提交表单)

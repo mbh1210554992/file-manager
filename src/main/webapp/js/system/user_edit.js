@@ -18,6 +18,7 @@ $(document).ready(function(){
 	var userId = $('.content').data('userId');
 	//根据id查询用户信息
 	if(userId){
+	    $('#password').hide();
 		doFindObjectById(userId);
 	}
 
@@ -71,6 +72,7 @@ function getEditFormData(){
 	var telephone = $('#telephone').val();
 	var remark = $('#remark').val();
 	var deptId = $('#editUserForm').data('deptId');
+	var roleId = $('#roleId').val();
 
 
 	var params = {
@@ -78,7 +80,8 @@ function getEditFormData(){
 		'password':password,
 		'telephone':telephone,
 		'deptId':deptId,
-		'remark':remark
+		'remark':remark,
+		'roleId':roleId
 	}
 	return params;
 }

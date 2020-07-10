@@ -16,6 +16,7 @@
         <result property="viewCount" column="view_count"/>
         <result property="typeName" column="type_name"/>
         <result property="deptName" column="dept_name"/>
+        <result property="rowCount" column="rowCount"/>
     </resultMap>
     <insert id="insert">
         insert into
@@ -49,7 +50,7 @@
     <delete id="deleteById">
         delete from document where id = #{documentId}
     </delete>
-    <select id="findAll" resultMap="documentResult">
+    <select id="findAllByUser" resultMap="documentResult">
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
@@ -59,12 +60,50 @@
     <select id="findById" resultMap="documentResult">
         select * from document where id = #{id}
     </select>
-    <select id="getRowCount" resultType="java.lang.Integer">
+    <select id="getRowCountByUser" resultType="java.lang.Integer">
         select count(*) from document where publisher = #{publisher}
     </select>
-    <select id="getALL" resultMap="documentResult">
+    <select id="findAll" resultMap="documentResult">
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
+        where perm_id = 4
+        limit #{startIndex},#{pageSize}
     </select>
+    <select id="getRowCountByPublic" resultType="java.lang.Integer">
+        select count(*) from document where perm_id = 4;
+    </select>
+    <select id="getAllDocumentByPerm" resultMap="documentResult">
+        select  d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where (perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+            <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
+                #{lowDeptId}
+            </foreach>)
+        or (perm_id = 3 and publisher_dept in
+            <foreach collection="highDeptId" item="highDeptId"  open="(" separator="," close=")">
+                #{highDeptId}
+            </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName})
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="getRowCountByPerm" resultType="java.lang.Integer">
+        select count(*) from document
+        where (perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+        <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
+            #{lowDeptId}
+        </foreach>)
+        or (perm_id = 3 and publisher_dept in
+        <foreach collection="highDeptId" item="highDeptId"  open="(" separator="," close=")">
+            #{highDeptId}
+        </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName})
+    </select>
+
 </mapper>

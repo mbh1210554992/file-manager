@@ -26,4 +26,5 @@ public class Document {
     private Integer permId;
     private Integer viewCount;
     private Integer enableDown;
+    private Integer rowCount;
 }

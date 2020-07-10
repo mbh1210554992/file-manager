@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jmy.dao.RoleMapper">
+    <resultMap id="roleResult" type="com.jmy.model.entity.Role">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="operator" column="operator"/>
+        <result property="operatorDate" column="operator_date"/>
+        <collection property="permissions" ofType="com.jmy.model.entity.Permission">
+            <id property="id" column="perm_id"/>
+            <result property="name" column="perm_name"/>
+            <result property="url" column="perm_url"/>
+        </collection>
+    </resultMap>
+    <insert id="insertRolePerm">
+        insert into role_permission
+        value(#{roleId},#{permId})
+    </insert>
+    <delete id="deleteRolePermByRoleId">
+        delete from role_permission where role_id = #{roleId}
+    </delete>
+    <select id="findAllRole" resultMap="roleResult">
+        select * from role
+        limit #{startIndex},#{pageSize};
+    </select>
+    <select id="getRowCount" resultType="java.lang.Integer">
+        select count(*) from role
+    </select>
+    <select id="getPermIdByRoleId" resultType="java.lang.Integer">
+        select permission_id from role_permission where role_id = #{roleId}
+    </select>
+
+    <select id="findRoleById" resultMap="roleResult">
+        select r.*, e.* from role r
+        left join role_permission p on r.id = p.role_id
+        left join permission e on p.permission_id = e.perm_id
+        where r.id = #{roleId}
+    </select>
+
+</mapper>

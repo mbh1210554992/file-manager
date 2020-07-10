@@ -49,4 +49,17 @@
     <select id="hasChild" resultType="java.lang.Integer">
         select count(*) from dept where parent_id = #{deptId}
     </select>
+    <select id="findParentId" resultType="java.lang.Integer">
+        select parent_id from dept where id = #{deptId}
+    </select>
+    <select id="findChildId" resultType="java.lang.Integer">
+        select id from dept where parent_id = #{deptId}
+    </select>
+    <select id="findChildIdByList" resultType="java.lang.Integer">
+        select id from dept
+        where parent_id in
+        <foreach collection="deptIds" item="deptIds"  open="(" separator="," close=")">
+            #{deptIds}
+        </foreach>
+    </select>
 </mapper>
