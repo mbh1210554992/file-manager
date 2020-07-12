@@ -9,7 +9,7 @@
 	   <div class="page-header">
 			<div class="page-title" style="padding-bottom: 5px">
 				<ol class="breadcrumb">
-				  <li class="active">查看文档</li>
+				  <li class="active">查找文档</li>
 				</ol>
 			</div>
 			<div class="page-stats"></div>

@@ -40,7 +40,7 @@ public class DocumentServiceImpl implements DocumentService {
         document.setPublisher(Operator.getUsername());
         document.setPublisherDate(new Date());
         document.setPublisherDept(Operator.getDeptId());
-        uploadFile(multipartFile, document);
+        uploadFile(multipartFile, document,"insert");
         documentMapper.insert(document);
     }
 
@@ -191,11 +191,11 @@ public class DocumentServiceImpl implements DocumentService {
             if(file.exists()) {
                 FileUtils.deleteQuietly(file);
             }
-            uploadFile(multipartFile, document);
+            uploadFile(multipartFile, document,"update");
             document.setViewCount(0);
             documentMapper.update(document);
         }else{
-            uploadFile(multipartFile, document);
+            uploadFile(multipartFile, document,"update");
             document.setViewCount(0);
             documentMapper.insert(document);
         }
@@ -206,7 +206,7 @@ public class DocumentServiceImpl implements DocumentService {
         documentMapper.updateCount(documentId);
     }
 
-    private void uploadFile(MultipartFile multipartFile,Document document) throws CommonException {
+    private void uploadFile(MultipartFile multipartFile,Document document,String type) throws CommonException {
         //获取存放文件在服务器中的路径
         StringBuilder path = new StringBuilder();
         path.append(context.getRealPath("/")+"\\upload");
@@ -222,9 +222,11 @@ public class DocumentServiceImpl implements DocumentService {
         //获取上传文件的文件名字
         String fileName = multipartFile.getOriginalFilename();
         path.append("\\").append(fileName).toString();
-        Document temp = documentMapper.findDocumentByNameAndUser(userName,document.getName());
-        if(temp != null){
-            throw new CommonException(ResultCode.FILE_EXITS_ERROR);
+        if("insert".equals(type)){
+            Document temp = documentMapper.findDocumentByNameAndUser(userName,document.getName());
+            if(temp != null){
+                throw new CommonException(ResultCode.FILE_EXITS_ERROR);
+            }
         }
         InputStream is = null;
         OutputStream os = null;

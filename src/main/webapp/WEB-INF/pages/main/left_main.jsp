@@ -17,7 +17,7 @@
                     </span>
                   </a>
                   <ul class="treeview-menu">
-                    <li><a id="load-upload-id"><i class="fa fa-circle-o"></i>查看文档</a></li>
+                    <li><a id="load-upload-id"><i class="fa fa-circle-o"></i>查找文档</a></li>
                     <li><a id="load-sort-id"><i class="fa fa-circle-o"></i>文档排名</a></li>
                     <shiro:authenticated>
                         <li><a id="load-myFile-id"><i class="fa fa-circle-o"></i>我的文档</a></li>
