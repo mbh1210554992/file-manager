@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmy.dao.DeptMapper">
-    <resultMap id="deptResult" type="com.jmy.model.Dept">
+    <resultMap id="deptResult" type="com.jmy.model.entity.Dept">
         <id property="id" column="id"/>
         <result property="level" column="level"/>
         <result property="name" column="name"/>
@@ -48,5 +48,18 @@
     </select>
     <select id="hasChild" resultType="java.lang.Integer">
         select count(*) from dept where parent_id = #{deptId}
+    </select>
+    <select id="findParentId" resultType="java.lang.Integer">
+        select parent_id from dept where id = #{deptId}
+    </select>
+    <select id="findChildId" resultType="java.lang.Integer">
+        select id from dept where parent_id = #{deptId}
+    </select>
+    <select id="findChildIdByList" resultType="java.lang.Integer">
+        select id from dept
+        where parent_id in
+        <foreach collection="deptIds" item="deptIds"  open="(" separator="," close=")">
+            #{deptIds}
+        </foreach>
     </select>
 </mapper>

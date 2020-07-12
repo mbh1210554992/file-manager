@@ -22,7 +22,7 @@
 				<div class="form-group " id ="password">
 					<div class="col-sm-2 control-label"><font color="red">*</font>密码：</div>
 					<div class="col-sm-10">
-						<input type="password" name="password" id="password" placeholder="密码" class="form-control dynamicClear required">
+						<input type="password" name="password"  placeholder="密码" class="form-control dynamicClear required">
 					</div>
 				</div>
 

@@ -2,11 +2,11 @@ package com.jmy.controller;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.dao.DocumentMapper;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.model.entity.User;
-import com.jmy.service.DocumentService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +19,7 @@ public class PageController {
 
     @RequestMapping("/mainIndex")
     public String mainPage(){
-        return "mainPage";
+        return "main/mainPage";
     }
 
     @RequestMapping("/mainIndex/attachmentList")
@@ -34,11 +34,15 @@ public class PageController {
 
     @RequestMapping("/mainIndex/login")
     public String mainLogin(){
-        return "mainLogin";
+        return "main/mainLogin";
     }
     @RequestMapping("/mainIndex/attachmentSort")
     public String attachmentSort(){
         return "attachment/main_sort";
+    }
+    @RequestMapping("/mainIndex/myAttachment")
+    public String myList(){
+        return "attachment/main_attachment_my";
     }
 
 //    @ResponseBody
@@ -55,6 +59,13 @@ public class PageController {
             throw new CommonException(ResultCode.UNAUTHENTICATED);
         }
         return Result.SUCCESS();
+    }
+
+    @RequestMapping("/mainIndex/logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "redirect:/mainIndex";
     }
 
 

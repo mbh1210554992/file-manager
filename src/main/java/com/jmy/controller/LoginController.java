@@ -1,8 +1,8 @@
 package com.jmy.controller;
 
 
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.model.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -39,7 +39,6 @@ public class LoginController {
         //3.调用login方法，进入realm完成认证
         subject.login(upToken);
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        request.setAttribute("username",user.getUsername());
         return new Result(ResultCode.SUCCESS);
     }
 }

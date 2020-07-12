@@ -39,7 +39,10 @@
         publisher_dept = #{publisherDept},
         publisher_date = #{publisherDate},
         perm_id = #{permId},
-        view_count = 0
+        enable_down = #{enableDown}
+        <if test="viewCount != null and viewCount != ''">
+            ,view_count = #{viewCount}
+        </if>
         where id=#{id}
     </update>
     <update id="updateCount">
@@ -55,29 +58,51 @@
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
         where d.publisher = #{publisher}
+        order by publisher_date desc
         limit #{startIndex},#{pageSize};
     </select>
     <select id="findById" resultMap="documentResult">
         select * from document where id = #{id}
     </select>
-    <select id="getRowCountByUser" resultType="java.lang.Integer">
+    <select id="findRowCountByUser" resultType="java.lang.Integer">
         select count(*) from document where publisher = #{publisher}
     </select>
-    <select id="findAll" resultMap="documentResult">
+    <select id="findAllPublic" resultMap="documentResult">
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
         where perm_id = 4
+        <if test="name != null and name !=''">
+            and d.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and d.type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
         limit #{startIndex},#{pageSize}
     </select>
-    <select id="getRowCountByPublic" resultType="java.lang.Integer">
-        select count(*) from document where perm_id = 4;
+    <select id="findRowCountPublic" resultType="java.lang.Integer">
+        select count(*) from document
+        where perm_id = 4
+        <if test="name != null and name !=''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
     </select>
-    <select id="getAllDocumentByPerm" resultMap="documentResult">
+    <select id="findAllDocumentByPerm" resultMap="documentResult">
         select  d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
-        where (perm_id = 1 and publisher_dept = #{deptId})
+        where ((perm_id = 1 and publisher_dept = #{deptId})
         or (perm_id = 2 and publisher_dept in
             <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
                 #{lowDeptId}
@@ -87,13 +112,23 @@
                 #{highDeptId}
             </foreach>)
         or perm_id = 4
-        or (perm_id = 5 and publisher = #{userName})
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="name != null and name !=''">
+            and d.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and d.type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
         limit #{startIndex},#{pageSize}
     </select>
 
-    <select id="getRowCountByPerm" resultType="java.lang.Integer">
+    <select id="findRowCountByPerm" resultType="java.lang.Integer">
         select count(*) from document
-        where (perm_id = 1 and publisher_dept = #{deptId})
+        where ((perm_id = 1 and publisher_dept = #{deptId})
         or (perm_id = 2 and publisher_dept in
         <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
             #{lowDeptId}
@@ -103,7 +138,53 @@
             #{highDeptId}
         </foreach>)
         or perm_id = 4
-        or (perm_id = 5 and publisher = #{userName})
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="name != null and name !=''">
+            and name  LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+    </select>
+    <select id="findDocumentBySort" resultMap="documentResult">
+        select  d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where ((perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+        <foreach collection="lowDeptId" item="lowDeptId" open="(" separator="," close=")">
+            #{lowDeptId}
+        </foreach>)
+        or (perm_id = 3 and publisher_dept in
+        <foreach collection="highDeptId" item="highDeptId" open="(" separator="," close=")">
+            #{highDeptId}
+        </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="type != null and type != 5">
+            and type = #{type}
+        </if>
+        order by view_count desc
+        limit 0,10
+    </select>
+
+    <select id="findAllPublicBySort" resultMap="documentResult">
+        select d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where perm_id = 4
+        <if test="type != null and type != 5">
+            and type = #{type}
+        </if>
+        order by view_count desc
+        limit 0,10
+    </select>
+    <select id="findDocumentByNameAndUser" resultType="com.jmy.model.entity.Document">
+        select * from document
+        where publisher = #{publisher} and name = #{name}
     </select>
 
 </mapper>

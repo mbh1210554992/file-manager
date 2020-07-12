@@ -2,8 +2,8 @@ package com.jmy.controller;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.model.entity.Dept;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +40,6 @@ public class DeptController {
         return "index";
     }
 
-    @RequestMapping("index2")
-    public String index2(){
-        return "index2";
-    }
 
     @ResponseBody
     @RequestMapping("doFindObjects")

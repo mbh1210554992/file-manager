@@ -30,7 +30,7 @@
         }
         // 得到根节点
         target.getRootNodes = function(data) {
-        	debugger
+
             // 指定Root节点值
             var _root = options.rootCodeValue?options.rootCodeValue:null
             var result = [];
@@ -192,7 +192,7 @@
                 error:function(xhr,textStatus){
                     var _errorMsg = '<tr><td colspan="'+options.columns.length+'"><div style="display: block;text-align: center;">'+xhr.responseText+'</div></td></tr>'
                     tbody.html(_errorMsg);
-                    debugger;
+
                 },
             });
         }

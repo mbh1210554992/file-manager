@@ -22,8 +22,8 @@
     </resultMap>
     <insert id="intsertUser">
         insert into
-        user(username,telephone,password,remark,dept_id,operator,operator_time)
-        values(#{username},#{telephone},#{password},#{remark}, #{deptId},#{operator},#{operatorTime})
+        user(username,telephone,password,remark,dept_id,operator,operator_time,role_id)
+        values(#{username},#{telephone},#{password},#{remark}, #{deptId},#{operator},#{operatorTime},#{roleId})
     </insert>
     <select id="findByUsername" resultMap="userResult">
         select u.* from user u
@@ -63,4 +63,7 @@
 		where
 			id = #{id}
 	</update>
+    <update id="updateUser">
+        
+    </update>
 </mapper>

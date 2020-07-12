@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jmy.dao.DocumentMapper">
-    <resultMap id="documentResult" type="com.jmy.model.Document">
+    <resultMap id="documentResult" type="com.jmy.model.entity.Document">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="abstr" column="abstr"/>
@@ -16,19 +16,175 @@
         <result property="viewCount" column="view_count"/>
         <result property="typeName" column="type_name"/>
         <result property="deptName" column="dept_name"/>
+        <result property="rowCount" column="rowCount"/>
     </resultMap>
     <insert id="insert">
         insert into
         document(name, path, abstr, type, size, publisher,publisher_dept,publisher_date,perm_id,view_count,enable_down)
-        value(#{name},#{path},#{abstr},#{type},#{size},#{publisher},#{publisherDept}, #{publisherDate},#{permId},#{viewCount},#{enableDown})
+        value(#{name},#{path},#{abstr},#{type},#{size},#{publisher},#{publisherDept}, #{publisherDate},#{permId},0,#{enableDown})
     </insert>
-    <select id="findAll" resultMap="documentResult">
+    <update id="update">
+        update document
+        set
+        name = #{name},
+        <if test="path != null and path != ''">
+            path = #{path},
+        </if>
+        abstr = #{abstr},
+        type = #{type},
+        <if test="size != null and size != ''">
+             size = #{size},
+        </if>
+        publisher = #{publisher},
+        publisher_dept = #{publisherDept},
+        publisher_date = #{publisherDate},
+        perm_id = #{permId},
+        enable_down = #{enableDown}
+        <if test="viewCount != null and viewCount != ''">
+            ,view_count = #{viewCount}
+        </if>
+        where id=#{id}
+    </update>
+    <update id="updateCount">
+        update document
+        set view_count = view_count+1
+        where id = #{documentId}
+    </update>
+    <delete id="deleteById">
+        delete from document where id = #{documentId}
+    </delete>
+    <select id="findAllByUser" resultMap="documentResult">
         select d.*,p.name as dept_name, t.name as type_name from document d
         left join dept p on publisher_dept = p.id
         left join document_type t on type = t.id
         where d.publisher = #{publisher}
+        order by publisher_date desc
+        limit #{startIndex},#{pageSize};
     </select>
     <select id="findById" resultMap="documentResult">
         select * from document where id = #{id}
     </select>
+    <select id="findRowCountByUser" resultType="java.lang.Integer">
+        select count(*) from document where publisher = #{publisher}
+    </select>
+    <select id="findAllPublic" resultMap="documentResult">
+        select d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where perm_id = 4
+        <if test="name != null and name !=''">
+            and d.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and d.type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
+        limit #{startIndex},#{pageSize}
+    </select>
+    <select id="findRowCountPublic" resultType="java.lang.Integer">
+        select count(*) from document
+        where perm_id = 4
+        <if test="name != null and name !=''">
+            and name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
+    </select>
+    <select id="findAllDocumentByPerm" resultMap="documentResult">
+        select  d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where ((perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+            <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
+                #{lowDeptId}
+            </foreach>)
+        or (perm_id = 3 and publisher_dept in
+            <foreach collection="highDeptId" item="highDeptId"  open="(" separator="," close=")">
+                #{highDeptId}
+            </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="name != null and name !=''">
+            and d.name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and d.type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+        order by publisher_date desc
+        limit #{startIndex},#{pageSize}
+    </select>
+
+    <select id="findRowCountByPerm" resultType="java.lang.Integer">
+        select count(*) from document
+        where ((perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+        <foreach collection="lowDeptId" item="lowDeptId"  open="(" separator="," close=")">
+            #{lowDeptId}
+        </foreach>)
+        or (perm_id = 3 and publisher_dept in
+        <foreach collection="highDeptId" item="highDeptId"  open="(" separator="," close=")">
+            #{highDeptId}
+        </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="name != null and name !=''">
+            and name  LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="type != null and type !='' and type != 5">
+            and type = #{type}
+        </if>
+        <if test="publisher != null and publisher !=''">
+            and publisher = #{publisher}
+        </if>
+    </select>
+    <select id="findDocumentBySort" resultMap="documentResult">
+        select  d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where ((perm_id = 1 and publisher_dept = #{deptId})
+        or (perm_id = 2 and publisher_dept in
+        <foreach collection="lowDeptId" item="lowDeptId" open="(" separator="," close=")">
+            #{lowDeptId}
+        </foreach>)
+        or (perm_id = 3 and publisher_dept in
+        <foreach collection="highDeptId" item="highDeptId" open="(" separator="," close=")">
+            #{highDeptId}
+        </foreach>)
+        or perm_id = 4
+        or (perm_id = 5 and publisher = #{userName}))
+        <if test="type != null and type != 5">
+            and type = #{type}
+        </if>
+        order by view_count desc
+        limit 0,10
+    </select>
+
+    <select id="findAllPublicBySort" resultMap="documentResult">
+        select d.*,p.name as dept_name, t.name as type_name from document d
+        left join dept p on publisher_dept = p.id
+        left join document_type t on type = t.id
+        where perm_id = 4
+        <if test="type != null and type != 5">
+            and type = #{type}
+        </if>
+        order by view_count desc
+        limit 0,10
+    </select>
+    <select id="findDocumentByNameAndUser" resultType="com.jmy.model.entity.Document">
+        select * from document
+        where publisher = #{publisher} and name = #{name}
+    </select>
+
 </mapper>

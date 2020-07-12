@@ -1,9 +1,8 @@
 package com.jmy.controller;
 
 import com.jmy.dao.RoleMapper;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
-import com.jmy.model.entity.Role;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/role/")

@@ -24,7 +24,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- 扫描model包 -->
-        <property name="typeAliasesPackage" value="com.jmy.model"/>
+<!--        <property name="typeAliasesPackage" value="com.jmy.model"/>-->
         <!-- 扫描sql配置文件:mapper需要的xml文件-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
@@ -79,7 +79,8 @@
                 /pages/** = anon
                 /mainIndex/** = anon
                 /file/** = anon
-                /logout.do = logout
+
+                /logout = logout
 
                 <!-- 剩余其他路径，必须认证通过才可以访问 -->
                 /** = authc

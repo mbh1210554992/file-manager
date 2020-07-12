@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <meta http-equiv="Content-Type"  content="multipart/form-data; charset=utf-8" />
+<link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-switch.css"/>
+<script src="${basePath}/bootstrap/js/bootstrap-switch.js"></script>
 
 <div class="container">
 	<!-- 页面导航 -->
@@ -57,7 +59,13 @@
                 <div class="form-group">
                     <div class="col-sm-2 control-label">选择文档：</div>
                     <div class="col-sm-10">
-                        <input type="file" name="multipartFile" class="form-control">
+                        <input type="file" name="multipartFile" id = "uploadFile" class="form-control" required="required">
+                    </div>
+                </div>
+                <div class="form-group" style="height: 30px">
+                    <div class="col-sm-2 control-label">能否下载：</div>
+                    <div class="col-sm-10" >
+                        <input type="checkbox" name="enableDown" id="enableDown" value="1" >
                     </div>
                 </div>
 
@@ -72,5 +80,4 @@
 
 </div>
 
-<script type="text/javascript" src="${basePath}/js/attach/attach.js"></script>
 <script type="text/javascript" src="${basePath}/js/attach/attach_edit.js"></script>

@@ -1,5 +1,6 @@
 <%@ page  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <html>
 <head>
@@ -9,7 +10,6 @@
 <meta HTTP-EQUIV="Expires" CONTENT="0">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <title>Insert title here</title>
-
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-datepicker.min.css" />
 <link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-table.min.css">
@@ -56,8 +56,6 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <%@include file="WEB-INF/pages/footer.jsp" %>
   <div class="control-sidebar-bg"></div>
 </div>
 

@@ -90,35 +90,8 @@ function doBack(){
 	doClearData();
 	$('.content').load('user/listUI');
 }
-//查询所有角色  -- 如果使修改，有roleIdList
-function doLoadRoles(roleIdList){
-	var url ='user/doFindRoles.do';
-	$.getJSON(url,function(result){
-		if(result.state==1){
-			doSetRoleList(result.data);
-			if(roleIdList){
-				for(var i in roleIdList){
-					$('#roleList input[name="checkedItem"]').each(function(){
-						if($(this).val()==roleIdList[i]){
-							$(this).prop('checked',true);
-						}
-					})
-				}
-			}
-		}else{
-			alert(result.message);
-		}
-	})
-}
-//加载填充角色列表
-function doSetRoleList(roleList){
-	var parentEle = $('#roleList');
-	for(var i in roleList){
-		var temp = '<input type="checkbox" name="checkedItem" value="[id]"/><span style="padding-right:30px;">[name]</span>';
-		temp = temp.replace('[id]',roleList[i].id).replace('[name]',roleList[i].name);
-		parentEle.append(temp);
-	}
-}
+
+
 function doFindObjectById(userId){
 	var params  = {'userId':userId};
 	var url = 'user/doFindUserById';
@@ -139,7 +112,6 @@ function doSetEditFormData(user){
 	$('#remark').val(user.remark);
 	$('#deptName').val(user.deptName);
 	$('#editUserForm').data('deptId',user.dept_Id);
-	//doLoadRoles(roleIds);
 }
 //点击返回，保存，修改按钮，清除editForm数据
 function doClearData(){

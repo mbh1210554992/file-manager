@@ -1,7 +1,7 @@
 package com.jmy.common.exception;
 
 
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.ResultCode;
 import lombok.Getter;
 
 /**

@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <header class="main-header">
     <!-- Logo -->
     <a class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>T</b>TMS</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>文档管理</b></span>
+      <span class="logo-lg"><b>文档管理 后台</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -32,8 +33,10 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">欢迎您,${requestScope.username}</span>
+              <shiro:authenticated>
+                <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <span class="hidden-xs">欢迎您,<shiro:principal property="username"/></span>
+              </shiro:authenticated>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -65,7 +68,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="logout.do" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="logout" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>

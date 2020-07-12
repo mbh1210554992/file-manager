@@ -5,7 +5,7 @@ import com.jmy.common.exception.CommonException;
 import com.jmy.dao.UserMapper;
 import com.jmy.model.entity.User;
 import com.jmy.model.PageObject;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.ResultCode;
 import com.jmy.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;

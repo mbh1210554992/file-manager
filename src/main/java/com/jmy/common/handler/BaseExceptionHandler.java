@@ -2,8 +2,8 @@ package com.jmy.common.handler;
 
 
 import com.jmy.common.exception.CommonException;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.UnauthorizedException;

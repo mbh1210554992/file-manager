@@ -2,8 +2,8 @@ package com.jmy.controller;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.model.entity.User;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

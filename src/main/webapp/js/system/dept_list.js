@@ -30,43 +30,6 @@ var colunms = [
 		sortable: true,
 		width: '180px'
 	}
-// },
-// {
-// 	title : '类型',
-// 	field : 'type',
-// 	align : 'center',
-// 	valign : 'middle',
-// 	sortable : true,
-// 	width : '100px',
-// 	formatter : function(item, index) {
-// 		if (item.type == 1) {
-// 			return '<span class="label label-success">菜单</span>';
-// 		}
-// 		if (item.type == 2) {
-// 			return '<span class="label label-warning">按钮</span>';
-// 		}
-// 	}
-// }, {
-// 	title : '排序号',
-// 	field : 'sort',
-// 	align : 'center',
-// 	valign : 'middle',
-// 	sortable : true,
-// 	width : '100px'
-// }, {
-// 	title : '菜单URL',
-// 	field : 'url',
-// 	align : 'center',
-// 	valign : 'middle',
-// 	sortable : true,
-// 	width : '160px'
-// }, {
-// 	title : '授权标识',
-// 	field : 'permission',
-// 	align : 'center',
-// 	valign : 'middle',
-// 	sortable : true
-// }
 	];
 
 
@@ -122,17 +85,6 @@ function doGetObjects() {
 	//1.2获得选中数组中下标为0的元素id的值
 	return selections[0].id;
   }
-/*获得选中的id值*/
-function getSelectedPname(){
-	//1.1 获得选中的对象,默认返回值为一个对象数组
-	var selections=$("#DeptTable")
-		.bootstrapTreeTable("getSelections");
-	if(selections.length==0){
-		return -1;//表示没选择任何对象
-	}
-	//1.2获得选中数组中下标为0的元素id的值
-	return selections[0].parent_name;
-}
   //删除菜单项
   function doDeleteObject(){
 	var deptId=getSelectedId();

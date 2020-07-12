@@ -24,7 +24,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!-- 扫描model包 -->
-        <property name="typeAliasesPackage" value="com.jmy.model"/>
+<!--        <property name="typeAliasesPackage" value="com.jmy.model"/>-->
         <!-- 扫描sql配置文件:mapper需要的xml文件-->
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
     </bean>
@@ -46,16 +46,10 @@
 
     <!-- 配置 shiro 的核心组件：securityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <!-- 配置缓存 -->
-        <property name="cacheManager" ref="cacheManager"/>
-        <!-- 配置域realm，用户名，密码，角色都保存在域里：实现从数据库中获取用户信息，需要我们自己创建一个类（实现Realm接口） -->
         <property name="realm" ref="shiroRealm"/>
     </bean>
 
-    <!-- 配置ehcache缓存bean，导入ehcache并新建配置文件 -->
-    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
-    </bean>
+
 
     <!-- 配置自己域realm实现  -->
     <bean id="shiroRealm" class="com.jmy.shiro.ShiroRealm"></bean>
@@ -66,7 +60,7 @@
         <!-- 身份认证失败，则跳转到登录页面的配置 -->
         <property name="loginUrl" value="/login" />
         <!-- 登录成功后的页面 -->
-        <property name="successUrl" value="/dept/index" />
+
         <!-- 权限认证失败，则跳转到指定页面 -->
         <property name="unauthorizedUrl"  value="error" />  <!-- 登录后访问没有权限的页面后跳转的页面 -->
         <!-- Shiro连接约束配置,即过滤链的定义 -->
@@ -83,7 +77,11 @@
                 /bootstrap/** = anon
                 /jquery/** = anon
                 /pages/** = anon
-                /logout.do = logout
+                /mainIndex/** = anon
+                /file/** = anon
+
+                /logout = logout
+
                 <!-- 剩余其他路径，必须认证通过才可以访问 -->
                 /** = authc
             </value>

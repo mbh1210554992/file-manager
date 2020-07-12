@@ -2,8 +2,8 @@ package com.jmy.controller;
 
 import com.jmy.common.exception.CommonException;
 import com.jmy.model.entity.Document;
-import com.jmy.model.entity.Result;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.Result;
+import com.jmy.model.ResultCode;
 import com.jmy.model.entity.User;
 import com.jmy.service.DocumentService;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +19,8 @@ import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/file/")
@@ -36,16 +38,23 @@ public class DocumentController {
         return "attachment/attachment_edit";
     }
 
+
     @RequestMapping(value="upload")
     @ResponseBody
-    public Result upload( MultipartFile multipartFile, Document document) {
+    public Result upload( MultipartFile multipartFile, Document document) throws CommonException {
+        if(multipartFile == null){
+            throw new CommonException(ResultCode.FILE_NULL_ERROR);
+        }
+        if(document.getName() == null){
+            throw new CommonException(ResultCode.FILE_NAME_ERROR);
+        }
         documentService.insert(document,multipartFile);
         return Result.SUCCESS();
     }
 
     @RequestMapping(value="update")
     @ResponseBody
-    public Result update( MultipartFile multipartFile, Document document) {
+    public Result update( MultipartFile multipartFile, Document document) throws CommonException {
         documentService.update(document,multipartFile);
         return Result.SUCCESS();
     }
@@ -58,8 +67,21 @@ public class DocumentController {
 
     @ResponseBody
     @RequestMapping("getDocuments")
-    public Result findAllByPerm(Integer pageCurrent){
-        return new Result(ResultCode.SUCCESS,documentService.findAllByPerm(pageCurrent));
+    public Result findAllByPerm(Integer pageCurrent,
+                                String publisher,
+                                Integer type,
+                                String name){
+        Map<String, Object> searchParams = new HashMap<>();
+        searchParams.put("type",type);
+        searchParams.put("name",name);
+        searchParams.put("publisher",publisher);
+        return new Result(ResultCode.SUCCESS,documentService.findAllByPerm(pageCurrent,searchParams));
+    }
+
+    @ResponseBody
+    @RequestMapping("getDocumentsSort")
+    public Result findDocumentBySort(Integer documentType){
+        return new Result(ResultCode.SUCCESS,documentService.findAllBySort(documentType));
     }
 
     @ResponseBody

@@ -1,16 +1,31 @@
 $(document).ready(function(){
-   $("#uploadFormId")
-   .on("click","#btn-upload",doUpload)
-   .on("click","#btn-return",doBack)
-   .on("click",".btn-down",doDownload);
+
    doGetObjects();
    $('#tbodyId').on('click',"#update",doUpdate);
-	$('#tbodyId').on('click',"#download",doDownload);
+	$('#tbodyId').on('click',"#download",doDownload)
+	.on('click','#delete',doDelete);
+
 });
 
+function doDelete(){
+    var documentId = $(this).parent().parent().data('id')
+    console.log("删除的id="+documentId);
+    var url = "file/deleteDocument?documentId="+documentId
+    $.getJSON(url,function(result){
+       if(result.code == 10000){
+           alert(result.message);
+
+       }else{
+            alert(result.message);
+       }
+       doGetObjects();
+    });
+}
+
 function doUpdate(){
-	console.log("id是:"+$(this).parent().parent().data("id"))
-    $(".content").load("file/editUI");
+	var documentId = $(this).parent().parent().data('id');
+	$('.content').data('documentId',documentId)
+    $('.content').load('file/editUI');
 }
 
 function doBack(){
@@ -20,36 +35,29 @@ function doDownload(){
 	var id=$(this).parent().parent().data("id");
 	var url="file/doDownload?id="+id;
 	document.location.href=url;
+	doGetObjects();
 }
 function doGetObjects(){
-	var url="file/getAllDocument";
-	$.getJSON(url,function(result){
+	var url="file/getDocuments";
+	var pageCurrent=$("#pageId").data("pageCurrent");
+    	if(!pageCurrent){
+    		pageCurrent=1;
+    	}
+    var params = {
+        pageCurrent : pageCurrent
+    }
+
+
+	$.getJSON(url,params,function(result){
 		if(result.code == 10000){
-			setTableBodyRows(result.data);
+			setTableBodyRows(result.data.list);
+			setPagination(result.data.pageObject);
 		}else{
 			alert(result.message);
 		}
 	});
 }
-function setTableBodyRows(list){
-	var tBody=$("#tbodyId");
-	tBody.empty();
-	for(var i in list){
 
-		var tr=$("<tr></tr>");
-		tr.data("id",list[i].id);
-		tr.append("<td>"+list[i].name+"</td>");
-		tr.append("<td>"+list[i].typeName+"</td>");
-		tr.append("<td>"+list[i].abstr+"</td>");
-		tr.append("<td>"+list[i].publisher+"</td>");
-		tr.append("<td>"+list[i].deptName+"</td>");
-		tr.append("<td>"+list[i].publisherDate+"</td>");
-		tr.append('<td><button type="button" class ="btn btn-default" id="download">下载</button>' +
-			'<button type="button" class="btn btn-info" id="update">覆盖</button>' +
-			'<button type="button" class="btn btn-danger" id="delete">删除</button></td>')
-	    tBody.append(tr);
-	}
-}
 /*点击文件上传按钮执行此函数*/
 function doUpload(){
 	//异步提交表单($.ajaxSubmit为异步提交表单)
@@ -79,10 +87,10 @@ function doUpload(){
      		dataType:"json",
      		success:function(data){
      		 if(data.code == 10000){
-                alert("上传成功")
+                alert(data.message)
                 $(".content").load("file/listUI");
             }else{
-                alert("上传失败");
+                alert(data.message);
                 $(".content").load("file/listUI");
             }
           }

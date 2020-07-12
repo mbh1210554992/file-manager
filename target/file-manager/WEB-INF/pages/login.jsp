@@ -19,7 +19,7 @@
 <div class="login-box" id="rrapp">
   <div class="login-box-body">
    <form action="">
-      <p class="login-box-msg"><b>用户登录</b></p>
+      <p class="login-box-msg"><b>后台用户登录</b></p>
        <div class="alert alert-danger alert-dismissible" style="display:none">
         <h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle" id="errorMessage"></i></h4>
       </div>
@@ -55,7 +55,6 @@ $(document).ready(function(){
 	$('#btn-login').click(doLogin);
 })
 function doLogin(){
-	debugger
 	var userName = $('#username').val();
 	var userPwd = $('#userpwd').val();
 	if(userName==''){
@@ -81,6 +80,7 @@ function doLogin(){
             if(result.code==10000){
                 //用户校验成功，跳转到主页面
                 location.href='index.jsp';
+                console.log("登陆成功")
             }else{
                 $('#errorMessage').parent().parent().css('display','block');
                 $('#errorMessage').text(result.message);

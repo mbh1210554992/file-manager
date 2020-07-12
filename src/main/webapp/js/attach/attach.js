@@ -38,7 +38,7 @@ function doDownload(){
 	doGetObjects();
 }
 function doGetObjects(){
-	var url="file/getAllDocument";
+	var url="file/getDocuments";
 	var pageCurrent=$("#pageId").data("pageCurrent");
     	if(!pageCurrent){
     		pageCurrent=1;
@@ -87,10 +87,10 @@ function doUpload(){
      		dataType:"json",
      		success:function(data){
      		 if(data.code == 10000){
-                alert("上传成功")
+                alert(data.message)
                 $(".content").load("file/listUI");
             }else{
-                alert("上传失败");
+                alert(data.message);
                 $(".content").load("file/listUI");
             }
           }

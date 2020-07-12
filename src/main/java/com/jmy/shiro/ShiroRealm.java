@@ -7,7 +7,7 @@ import com.jmy.dao.UserMapper;
 import com.jmy.model.entity.Permission;
 import com.jmy.model.entity.Role;
 import com.jmy.model.entity.User;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.ResultCode;
 import lombok.SneakyThrows;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

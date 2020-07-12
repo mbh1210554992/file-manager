@@ -37,7 +37,7 @@ function doLoadEditPage(){
 	}
 	var url="user/editUI"
 	$(".content").load(url,function(){
-		$(".panel-heading").html(title)
+		$("#titleId").html(title)
 	})
 }
 //获得选中的id，然后拼接成字符串
@@ -82,6 +82,7 @@ function setTableBodyRows(list){
 	'<td>[username]</td>'+
 	'<td>[telephone]</td>'+
 	'<td>[deptName]</td>'+
+	'<td>[roleName]</td>'+
 	'<td>[state]</td>'+
 	'<td><button type="button" class="btn btn-default btn-xs btn-valid" value="[validchange]">[stateStr]</button></td>';
 	for(var i in list){
@@ -95,6 +96,7 @@ function setTableBodyRows(list){
 	    .replace('[username]',list[i].username)
 	    .replace('[telephone]',list[i].telephone)
 	    .replace('[deptName]',list[i].deptName)
+	    .replace('[roleName]',list[i].role.name)
 	    .replace('[state]',state)
 	    .replace('[validchange]',validchange)
 	    .replace('[stateStr]',stateStr));

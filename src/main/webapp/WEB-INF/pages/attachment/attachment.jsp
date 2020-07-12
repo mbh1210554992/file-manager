@@ -17,18 +17,7 @@
 		</div>
 		<form method="post" id="uploadFormId" 
 		      enctype="multipart/form-data">
-		    <!-- 查询表单 -->
-			<div class="row page-search">
-			 <div class="col-md-12">
-				<ul class="list-unstyled list-inline">
-					<li class='O1'>
-					    <shiro:hasPermission name="file:upload">
-					        <button type="button" class="btn btn-primary btn-upload" >上传</button>
-					    </shiro:hasPermission>
-					</li>
-				</ul>
-			  </div>
-			</div>
+
 			<!-- 列表显示内容 -->
 			<div class="row col-md-12">
 				<table class="table table-bordered" >
@@ -63,7 +52,7 @@
     	var tBody=$("#tbodyId");
     	tBody.empty();
     	for(var i in list){
-
+			var enableDown;
     		var tr=$("<tr></tr>");
     		tr.data("id",list[i].id);
     		tr.append("<td>"+list[i].name+"</td>");
@@ -73,8 +62,13 @@
     		tr.append("<td>"+list[i].deptName+"</td>");
     		tr.append("<td>"+list[i].publisherDate+"</td>");
     		tr.append("<td>"+list[i].viewCount+"</td>");
-    		tr.append('<td><shiro:hasPermission name="file:download"><button type="button" class ="btn btn-default" id="download">下载</button></shiro:hasPermission>' +
-    			'<shiro:hasPermission name="file:update"><button type="button" class="btn btn-info" id="update">修改</button></shiro:hasPermission>' +
+			if(list[i].enableDown == 1){
+				enableDown = '<td><shiro:hasPermission name="file:download"><button type="button" class ="btn btn-default" id="download">下载</button></shiro:hasPermission>';
+			}else{
+				enableDown ='<td><shiro:hasPermission name="file:download"><button type="button" class ="btn btn-default" id="download" disabled="disabled">下载</button></shiro:hasPermission>';
+			}
+
+    		tr.append(enableDown+'<shiro:hasPermission name="file:update"><button type="button" class="btn btn-info" id="update">修改</button></shiro:hasPermission>' +
     			'<shiro:hasPermission name="file:delete"><button type="button" class="btn btn-danger" id="delete">删除</button></shiro:hasPermission></td>')
     	    tBody.append(tr);
     	}

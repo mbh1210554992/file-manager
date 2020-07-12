@@ -3,6 +3,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <meta http-equiv="Content-Type"  content="multipart/form-data; charset=utf-8" />
+<link rel="stylesheet" href="${basePath}/bootstrap/css/bootstrap-switch.css"/>
+<script src="${basePath}/bootstrap/js/bootstrap-switch.js"></script>
 
 <div class="container">
 	<!-- 页面导航 -->
@@ -45,11 +47,11 @@
                     <div class="col-sm-10">
                         <div class="dropdown">
                             <select id="permId" class="form-control" name ="permId">
-                                <option value="1">部门共享</option>
-                                <option value="2">部门及以上共享</option>
-                                <option value="3">部门及以下共享</option>
-                                <option value="4">公开</option>
-                                <option value="5">私有</option>
+                                <option id="select1" value="1">部门共享</option>
+                                <option id="select2" value="2">部门及以上共享</option>
+                                <option id="select3" value="3">部门及以下共享</option>
+                                <option id="select4" value="4">公开</option>
+                                <option id="select5" value="5" >私有</option>
                             </select>
                         </div>
                     </div>
@@ -57,7 +59,13 @@
                 <div class="form-group">
                     <div class="col-sm-2 control-label">选择文档：</div>
                     <div class="col-sm-10">
-                        <input type="file" name="multipartFile" class="form-control">
+                        <input type="file" name="multipartFile" id = "uploadFile" class="form-control" required="required">
+                    </div>
+                </div>
+                <div class="form-group" style="height: 30px">
+                    <div class="col-sm-2 control-label">能否下载：</div>
+                    <div class="col-sm-10" >
+                        <input type="checkbox" name="enableDown" id="enableDown" value="1" >
                     </div>
                 </div>
 
@@ -72,4 +80,4 @@
 
 </div>
 
-<script type="text/javascript" src="${basePath}/js/attach/attach.js">
+<script type="text/javascript" src="${basePath}/js/attach/attach_edit.js"></script>

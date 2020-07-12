@@ -1,5 +1,6 @@
 <%@ page  contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <c:set var="basePath" value="${pageContext.request.contextPath}"></c:set>
 <html>
 <head>
@@ -55,8 +56,6 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <%@include file="WEB-INF/pages/footer.jsp" %>
   <div class="control-sidebar-bg"></div>
 </div>
 

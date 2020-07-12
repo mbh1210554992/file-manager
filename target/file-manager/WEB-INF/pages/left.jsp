@@ -18,65 +18,36 @@
           <ul class="treeview-menu">
             <li><a id="load-dept-id"><i class="fa fa-circle-o"></i>部门管理</a></li>
             <li><a id="load-user-id"><i class="fa fa-circle-o"></i>用户管理</a></li>
-            <li><a id="load-perm-id"><i class="fa fa-circle-o"></i>权限管理</a></li>
+            <li><a id="load-role-id"><i class="fa fa-circle-o"></i>角色管理</a></li>
             <li><a id="load-file-id"><i class="fa fa-circle-o"></i>文档后台管理</a></li>
           </ul>
         </li>
-         <li class="treeview">
-                  <a href="#">
-                    <i class="fa fa-files-o"></i>
-                    <span>文档管理</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a id="load-upload-id"><i class="fa fa-circle-o"></i>文档上传</a></li>
-                    <li><a id="load-user-id"><i class="fa fa-circle-o"></i>文档排名</a></li>
-                    <li><a id="load-perm-id"><i class="fa fa-circle-o"></i>文档分类</a></li>
-                  </ul>
-                </li>
       </ul>
     </section>
     <!-- /.sidebar -->
 
   </aside>
 <script type="text/javascript">
-$('#load-project-id').click(function(){
-	var url="project/listUI.do?t="+Math.random(1000);
-	$(".content").load(url);
-})
-$('#load-team-id').click(function(){
-	var url="team/listUI.do?t="+Math.random(1000);
-	$(".content").load(url);
-})
-$('#load-type-id').click(function(){
-	var url="type/listUI.do?t="+Math.random(1000);
-	$(".content").load(url);
-})
-$('#load-product-id').click(function(){
-	var url="product/listUI.do?t="+Math.random(1000);
-	$(".content").load(url);
-})
-$('#load-attachment-id').click(function(){
-	var url="attachment/attachmentUI.do?t="+Math.random(1000);
-	$(".content").load(url);
-})
 $('#load-role-id').click(function(){
-	var url="role/listUI.do?t="+Math.random(1000);
+	var url="role/listUI.do";
 	$(".content").load(url);
 })
 $('#load-dept-id').click(function(){
-	var url="dept/list?t="+Math.random(1000);
+	var url="dept/list";
 	$(".content").load(url);
 })
 $('#load-user-id').click(function(){
-	var url="user/listUI?t="+Math.random(1000);
+	var url="user/listUI";
 	$(".content").load(url);
 })
 
 $('#load-upload-id').click(function(){
-	var url="file/listUI?t="+Math.random(1000);
+	var url="file/listUI";
 	$(".content").load(url);
 })
+$('#load-file-id').click(function(){
+	var url="file/listUI";
+	$(".content").load(url);
+})
+
 </script>

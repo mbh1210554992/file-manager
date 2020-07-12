@@ -4,7 +4,7 @@ import com.jmy.common.exception.CommonException;
 import com.jmy.dao.DeptMapper;
 import com.jmy.model.entity.Dept;
 import com.jmy.model.entity.User;
-import com.jmy.model.entity.ResultCode;
+import com.jmy.model.ResultCode;
 import com.jmy.service.DeptService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
